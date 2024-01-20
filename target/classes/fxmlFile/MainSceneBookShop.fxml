@@ -1,0 +1,591 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.mainController">
+   <children>
+      <AnchorPane>
+         <children>
+            <BorderPane prefHeight="750.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <left>
+                  <AnchorPane BorderPane.alignment="CENTER">
+                     <children>
+                        <VBox alignment="CENTER" style="-fx-background-color: white; -fx-background-radius: 10;" stylesheets="@application.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <VBox prefHeight="211.0" prefWidth="226.0" spacing="20.0">
+                                 <children>
+                                    <Label alignment="CENTER" prefHeight="49.0" prefWidth="94.0" text="Browse">
+                                       <font>
+                                          <Font name="Arial Narrow Bold" size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox fx:id="browseTab" alignment="CENTER" prefHeight="200.0" prefWidth="200.0" spacing="10.0" stylesheets="@application.css">
+                                       <children>
+                                          <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                             <HBox.margin>
+                                                <Insets left="15.0" />
+                                             </HBox.margin>
+                                             <image>
+                                                <Image url="@../image/icon.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Label alignment="CENTER" prefHeight="49.0" prefWidth="94.0" text="Browse">
+                                             <font>
+                                                <Font name="Arial Narrow Bold" size="20.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <styleClass>
+                                          <String fx:value="allCategoriesHover" />
+                                          <String fx:value="allCategoriesaAction" />
+                                          <String fx:value="allCategoriesBackGround" />
+                                       </styleClass>
+                                    </HBox>
+                                    <HBox fx:id="topBookTab" alignment="CENTER" onMouseClicked="#TopBookClicked" prefHeight="200.0" prefWidth="200.0" spacing="10.0" stylesheets="@application.css">
+                                       <children>
+                                          <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                             <HBox.margin>
+                                                <Insets left="15.0" />
+                                             </HBox.margin>
+                                             <image>
+                                                <Image url="@../image/topBraws.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Label alignment="CENTER" prefHeight="45.0" prefWidth="109.0" text="Top Book">
+                                             <font>
+                                                <Font name="Arial Narrow Bold" size="20.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <styleClass>
+                                          <String fx:value="allCategoriesHover" />
+                                          <String fx:value="allCategoriesaAction" />
+                                          <String fx:value="allCategoriesBackGround" />
+                                       </styleClass>
+                                    </HBox>
+                                    <HBox fx:id="categoriesTab" alignment="CENTER" prefHeight="200.0" prefWidth="200.0" spacing="10.0" stylesheets="@application.css">
+                                       <children>
+                                          <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                             <HBox.margin>
+                                                <Insets left="15.0" />
+                                             </HBox.margin>
+                                             <image>
+                                                <Image url="@../image/catigore.jpg" />
+                                             </image>
+                                          </ImageView>
+                                          <Label alignment="CENTER" prefHeight="40.0" prefWidth="112.0" text="Categories">
+                                             <font>
+                                                <Font name="Arial Narrow Bold" size="20.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <styleClass>
+                                          <String fx:value="allCategoriesHover" />
+                                          <String fx:value="allCategoriesaAction" />
+                                          <String fx:value="allCategoriesBackGround" />
+                                       </styleClass>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <Separator>
+                                 <VBox.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </VBox.margin>
+                              </Separator>
+                              <VBox prefHeight="271.0" prefWidth="226.0" spacing="20.0">
+                                 <children>
+                                    <Label alignment="CENTER" prefHeight="25.0" prefWidth="125.0" text="Your book">
+                                       <font>
+                                          <Font name="Arial Narrow Bold" size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox fx:id="uploadedTab" alignment="CENTER" onMouseClicked="#uploadedTabClicked" prefHeight="200.0" prefWidth="200.0" spacing="10.0" stylesheets="@application.css">
+                                       <children>
+                                          <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                             <HBox.margin>
+                                                <Insets left="15.0" />
+                                             </HBox.margin>
+                                             <image>
+                                                <Image url="@../image/uploaded.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Label alignment="CENTER" prefHeight="45.0" prefWidth="109.0" text="uploaded ">
+                                             <font>
+                                                <Font name="Arial Narrow Bold" size="20.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <styleClass>
+                                          <String fx:value="allCategoriesHover" />
+                                          <String fx:value="allCategoriesaAction" />
+                                          <String fx:value="allCategoriesBackGround" />
+                                       </styleClass>
+                                    </HBox>
+                                    <HBox fx:id="readingTab" alignment="CENTER" prefHeight="200.0" prefWidth="200.0" spacing="10.0" stylesheets="@application.css">
+                                       <children>
+                                          <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                             <HBox.margin>
+                                                <Insets left="15.0" />
+                                             </HBox.margin>
+                                             <image>
+                                                <Image url="@../image/open-book.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Label alignment="CENTER" prefHeight="35.0" prefWidth="105.0" text="Reading">
+                                             <font>
+                                                <Font name="Arial Narrow Bold" size="20.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <styleClass>
+                                          <String fx:value="allCategoriesHover" />
+                                          <String fx:value="allCategoriesaAction" />
+                                          <String fx:value="allCategoriesBackGround" />
+                                       </styleClass>
+                                    </HBox>
+                                    <HBox fx:id="favoritesTab" alignment="CENTER" prefHeight="200.0" prefWidth="200.0" spacing="10.0" stylesheets="@application.css">
+                                       <children>
+                                          <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                             <HBox.margin>
+                                                <Insets left="15.0" />
+                                             </HBox.margin>
+                                             <image>
+                                                <Image url="@../image/favorite%20tab.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Label alignment="CENTER" prefHeight="45.0" prefWidth="109.0" text="Favorites">
+                                             <font>
+                                                <Font name="Arial Narrow Bold" size="20.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <styleClass>
+                                          <String fx:value="allCategoriesHover" />
+                                          <String fx:value="allCategoriesaAction" />
+                                          <String fx:value="allCategoriesBackGround" />
+                                       </styleClass>
+                                    </HBox>
+                                    <HBox fx:id="historyTab" alignment="CENTER" prefHeight="200.0" prefWidth="200.0" spacing="10.0" stylesheets="@application.css">
+                                       <children>
+                                          <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                             <HBox.margin>
+                                                <Insets left="15.0" />
+                                             </HBox.margin>
+                                             <image>
+                                                <Image url="@../image/history.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Label alignment="CENTER" prefHeight="40.0" prefWidth="112.0" text="History">
+                                             <font>
+                                                <Font name="Arial Narrow Bold" size="20.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <styleClass>
+                                          <String fx:value="allCategoriesHover" />
+                                          <String fx:value="allCategoriesaAction" />
+                                          <String fx:value="allCategoriesBackGround" />
+                                       </styleClass>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <Separator prefWidth="200.0">
+                                 <VBox.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </VBox.margin>
+                              </Separator>
+                              <VBox alignment="CENTER" prefHeight="162.0" prefWidth="226.0" spacing="20.0">
+                                 <children>
+                                    <Label contentDisplay="RIGHT" prefHeight="31.0" prefWidth="203.0" text="Shelves">
+                                       <font>
+                                          <Font name="Arial Narrow Bold" size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox fx:id="yourShelvesTab" alignment="CENTER" prefHeight="37.0" prefWidth="226.0" spacing="10.0" stylesheets="@application.css">
+                                       <children>
+                                          <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                             <HBox.margin>
+                                                <Insets left="15.0" top="5.0" />
+                                             </HBox.margin>
+                                             <image>
+                                                <Image url="@../image/shelves.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Label alignment="CENTER" prefHeight="49.0" prefWidth="124.0" text="Your shelves">
+                                             <font>
+                                                <Font name="Arial Narrow Bold" size="20.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <styleClass>
+                                          <String fx:value="allCategoriesHover" />
+                                          <String fx:value="allCategoriesaAction" />
+                                          <String fx:value="allCategoriesBackGround" />
+                                       </styleClass>
+                                    </HBox>
+                                    <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#createShelves" prefHeight="55.0" prefWidth="165.0" styleClass="createShelves_Button" stylesheets="@application.css" text="Create Shelves" textFill="WHITE">
+                                       <font>
+                                          <Font name="Rockwell Condensed" size="18.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </left>
+               <top>
+                  <AnchorPane BorderPane.alignment="CENTER">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="103.0" prefWidth="1000.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="86.0" prefWidth="213.0" text="System St Book library" textAlignment="CENTER" textFill="#18f08a" wrapText="true" HBox.hgrow="ALWAYS">
+                                 <font>
+                                    <Font name="Kristen ITC" size="23.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets top="10.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Separator orientation="VERTICAL" prefHeight="200.0">
+                                 <HBox.margin>
+                                    <Insets bottom="10.0" top="10.0" />
+                                 </HBox.margin>
+                              </Separator>
+                              <AnchorPane prefHeight="103.0" prefWidth="399.0">
+                                 <children>
+                                    <AnchorPane fx:id="searchIntobBook" prefHeight="200.0" prefWidth="386.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <VBox alignment="CENTER" prefHeight="103.0" prefWidth="397.0">
+                                             <children>
+                                                <HBox alignment="CENTER" spacing="20.0" style="-fx-border-color: white; -fx-border-radius: 30;" styleClass="transmate" stylesheets="@application.css">
+                                                   <children>
+                                                      <TextField fx:id="searchInTopBook" focusTraversable="false" maxHeight="1.7976931348623157E308" opacity="0.72" prefHeight="44.0" prefWidth="256.0" promptText="search" style="-fx-background-color: white;" stylesheets="@application.css">
+                                                         <HBox.margin>
+                                                            <Insets bottom="5.0" left="10.0" top="5.0" />
+                                                         </HBox.margin>
+                                                         <font>
+                                                            <Font size="18.0" />
+                                                         </font>
+                                                         <cursor>
+                                                            <Cursor fx:constant="TEXT" />
+                                                         </cursor>
+                                                         <styleClass>
+                                                            <String fx:value="searchLabel" />
+                                                            <String fx:value="transmate" />
+                                                         </styleClass>
+                                                      </TextField>
+                                                      <ImageView fitHeight="42.0" fitWidth="40.0" onMouseClicked="#searchInTobBookClicked" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER">
+                                                         <image>
+                                                            <Image url="@../image/searchImage.png" />
+                                                         </image>
+                                                         <HBox.margin>
+                                                            <Insets left="5.0" top="5.0" />
+                                                         </HBox.margin>
+                                                         <cursor>
+                                                            <Cursor fx:constant="HAND" />
+                                                         </cursor>
+                                                      </ImageView>
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets top="5.0" />
+                                                   </VBox.margin>
+                                                </HBox>
+                                                <Label fx:id="resultSearchInTopBook" alignment="CENTER" contentDisplay="CENTER" prefHeight="19.0" prefWidth="268.0" textAlignment="CENTER" textFill="#18f08a">
+                                                   <font>
+                                                      <Font name="Lucida Bright Demibold" size="15.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="searchInUploaded" prefHeight="103.0" prefWidth="386.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <VBox alignment="CENTER" prefHeight="103.0" prefWidth="397.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <children>
+                                                <HBox alignment="CENTER" spacing="20.0" style="-fx-border-color: white; -fx-border-radius: 30;" styleClass="transmate" stylesheets="@application.css">
+                                                   <children>
+                                                      <TextField fx:id="searchText" focusTraversable="false" maxHeight="1.7976931348623157E308" opacity="0.72" prefHeight="44.0" prefWidth="256.0" promptText="search" style="-fx-background-color: white;" stylesheets="@application.css">
+                                                         <HBox.margin>
+                                                            <Insets bottom="5.0" left="10.0" top="5.0" />
+                                                         </HBox.margin>
+                                                         <font>
+                                                            <Font size="18.0" />
+                                                         </font>
+                                                         <cursor>
+                                                            <Cursor fx:constant="TEXT" />
+                                                         </cursor>
+                                                         <styleClass>
+                                                            <String fx:value="searchLabel" />
+                                                            <String fx:value="transmate" />
+                                                         </styleClass>
+                                                      </TextField>
+                                                      <ImageView fitHeight="42.0" fitWidth="40.0" onMouseClicked="#searchClick" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER">
+                                                         <image>
+                                                            <Image url="@../image/searchImage.png" />
+                                                         </image>
+                                                         <HBox.margin>
+                                                            <Insets left="5.0" top="5.0" />
+                                                         </HBox.margin>
+                                                         <cursor>
+                                                            <Cursor fx:constant="HAND" />
+                                                         </cursor>
+                                                      </ImageView>
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets top="5.0" />
+                                                   </VBox.margin>
+                                                </HBox>
+                                                <Label fx:id="resultSearch" alignment="CENTER" contentDisplay="CENTER" prefHeight="19.0" prefWidth="268.0" textAlignment="CENTER" textFill="#18f08a">
+                                                   <font>
+                                                      <Font name="Lucida Bright Demibold" size="15.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </AnchorPane>
+                              <Pane prefHeight="103.0" prefWidth="43.0" HBox.hgrow="ALWAYS" />
+                              <HBox alignment="CENTER" prefHeight="103.0" prefWidth="352.0" stylesheets="@application.css">
+                                 <children>
+                                    <ImageView fx:id="log_out_Button" fitHeight="53.0" fitWidth="58.0" onMouseClicked="#log_out" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../image/log-out.png" />
+                                       </image>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </ImageView>
+                                    <Label fx:id="usernameLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="64.0" prefWidth="186.0" textAlignment="CENTER" textFill="#18f08a" wrapText="true" HBox.hgrow="ALWAYS">
+                                       <font>
+                                          <Font name="Kristen ITC" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                                       <children>
+                                          <ImageView fitHeight="33.0" fitWidth="33.0" onMouseClicked="#setting" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../image/setting.png" />
+                                             </image>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="39.0" layoutX="10.0" layoutY="10.0" onMouseClicked="#referesh" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../image/referesh.png" />
+                                             </image>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </ImageView>
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets bottom="5.0" top="5.0" />
+                                       </HBox.margin>
+                                    </VBox>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="5.0" right="5.0" />
+                                 </HBox.margin>
+                              </HBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+               </top>
+               <center>
+                  <AnchorPane fx:id="mainForm" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
+                     <children>
+                        <AnchorPane fx:id="browseForm" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <AnchorPane fx:id="TopBookForm" prefHeight="647.0" prefWidth="811.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <AnchorPane prefHeight="647.0" prefWidth="480.0" stylesheets="@application.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="320.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <ScrollPane layoutX="15.0" layoutY="108.0" prefHeight="647.0" prefWidth="520.0" styleClass="otherTobBook" stylesheets="@application.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <content>
+                                          <GridPane fx:id="otherTobBookGridPane">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                             </columnConstraints>
+                                          </GridPane>
+                                       </content>
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
+                                    </ScrollPane>
+                                    <Pane fx:id="paneNothingUploadedByOther" layoutX="75.0" layoutY="46.0" prefHeight="47.0" prefWidth="331.0" AnchorPane.bottomAnchor="554.0" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="114.0" AnchorPane.topAnchor="41.0">
+                                       <children>
+                                          <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-1.0" layoutY="-1.0" prefHeight="49.0" prefWidth="332.0" stylesheets="@application.css" text="Nothing has been uploaded by people" textAlignment="CENTER" textFill="#18f08a">
+                                             <font>
+                                                <Font name="Leelawadee UI Bold" size="18.0" />
+                                             </font>
+                                             <styleClass>
+                                                <String fx:value="bothForm" />
+                                                <String fx:value="yourTobBook" />
+                                             </styleClass>
+                                          </Label>
+                                       </children>
+                                    </Pane>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </AnchorPane>
+                              <AnchorPane layoutX="522.0" prefHeight="647.0" prefWidth="329.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <ScrollPane layoutY="15.0" prefHeight="627.0" prefWidth="255.0" styleClass="yourTobBook" stylesheets="@application.css" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="10.0">
+                                       <content>
+                                          <GridPane fx:id="yourTobBookGridPane" alignment="CENTER">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                             </columnConstraints>
+                                          </GridPane>
+                                       </content>
+                                       <padding>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </padding>
+                                    </ScrollPane>
+                                    <Pane fx:id="paneNothingUploadedByYour" layoutX="25.0" layoutY="36.0" prefHeight="47.0" prefWidth="225.0" AnchorPane.bottomAnchor="569.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="31.0">
+                                       <children>
+                                          <Label alignment="CENTER" contentDisplay="CENTER" layoutX="32.0" layoutY="-1.0" prefHeight="39.0" prefWidth="216.0" stylesheets="@application.css" text="Nothing has been uploaded" textAlignment="CENTER" textFill="#18f08a">
+                                             <font>
+                                                <Font name="Leelawadee UI Bold" size="15.0" />
+                                             </font>
+                                             <styleClass>
+                                                <String fx:value="bothForm" />
+                                                <String fx:value="yourTobBook" />
+                                             </styleClass></Label>
+                                       </children>
+                                    </Pane>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </AnchorPane>
+                           </children></AnchorPane>
+                        <AnchorPane fx:id="uploadedForm" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <VBox prefHeight="643.0" prefWidth="763.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="226.0" text="Recently Added" textAlignment="CENTER" textFill="#18f08a">
+                                       <font>
+                                          <Font name="Rockwell" size="24.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
+                                    </Label>
+                                    <HBox alignment="CENTER" prefHeight="38.0" prefWidth="774.0">
+                                       <children>
+                                          <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                                          <Label fx:id="countBook" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="630.0" text="No Book " textAlignment="CENTER" textFill="#18f08a">
+                                             <font>
+                                                <Font name="Rockwell Bold" size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <Pane layoutX="219.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                                       </children>
+                                    </HBox>
+                                    <ScrollPane prefHeight="233.0" prefWidth="753.0" style="-fx-border-width: 3;">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </VBox.margin>
+                                       <content>
+                                          <HBox fx:id="hBoxScrollPane" alignment="CENTER" prefHeight="214.0" prefWidth="747.0" spacing="5.0">
+                                             <padding>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </padding>
+                                          </HBox>
+                                       </content>
+                                    </ScrollPane>
+                                    <HBox alignment="TOP_CENTER" prefHeight="54.0" prefWidth="763.0">
+                                       <children>
+                                          <Pane prefWidth="60.0" HBox.hgrow="ALWAYS" />
+                                          <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#addBookButton" prefWidth="146.0" styleClass="createShelves_Button" stylesheets="@application.css" text="Add  Book" textAlignment="CENTER" textFill="WHITE">
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                             <font>
+                                                <Font name="Rockwell Italic" size="20.0" />
+                                             </font>
+                                          </Button>
+                                          <Pane prefWidth="60.0" HBox.hgrow="ALWAYS" />
+                                       </children>
+                                    </HBox>
+                                    <ScrollPane hbarPolicy="NEVER" prefHeight="310.0" prefWidth="753.0" style="-fx-background-color: white; -fx-background-radius: 5;" vbarPolicy="NEVER">
+                                       <content>
+                                          <GridPane fx:id="gridPane" alignment="CENTER" hgap="10.0" prefHeight="0.0" prefWidth="0.0" vgap="10.0">
+                                             <columnConstraints>
+                                                <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+                                             </columnConstraints>
+                                          </GridPane>
+                                       </content>
+                                       <VBox.margin>
+                                          <Insets left="5.0" right="5.0" />
+                                       </VBox.margin>
+                                    </ScrollPane>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </center>
+            </BorderPane>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>
