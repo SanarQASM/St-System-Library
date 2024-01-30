@@ -77,6 +77,12 @@
 .switchAnchor{
 	-fx-background-color: linear-gradient(to top left , #ff003f, #00b4d8);
 }
+.hboxAddBook{
+    -fx-background-color: linear-gradient(to left bottom , #ff003f, #00b4d8);
+}
+.hboxAddBook:hover{
+    -fx-background-color: linear-gradient(to top left , #ff003f, #00b4d8);
+}
 .actionForAllButton:pressed {
 	-fx-background-color: linear-gradient(to top left , #2986cc, #9fc5e8);
 }
@@ -148,5 +154,11 @@
 	-fx-fill: linear-gradient(to top left , #ffffff, #fefee3);
 }
 
-
+.textareaDescribtion{
+	-fx-background-radius: 25;
+	-fx-border-radius: 25;
+	-fx-border-style: solid;
+	-fx-border-color: #18f08a;
+	
+}
 

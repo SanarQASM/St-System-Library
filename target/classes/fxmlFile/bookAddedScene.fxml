@@ -16,7 +16,7 @@
 
 <HBox fx:id="AddBookHbox" style="-fx-background-color: white; -fx-background-radius: 20 0 20 0; -fx-border-style: solid; -fx-border-color: #18f08a; -fx-border-radius: 20 0 20 0; -fx-border-width: 3;" styleClass="recommend_Hbox" stylesheets="@application.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.bookController">
    <children>
-      <VBox alignment="CENTER" prefHeight="181.0" prefWidth="190.0" spacing="5.0">
+      <VBox alignment="CENTER" prefHeight="181.0" prefWidth="145.0" spacing="5.0">
          <children>
             <ImageView fx:id="bookImage" disable="true" fitHeight="136.0" fitWidth="136.0" nodeOrientation="INHERIT" onMouseClicked="#clickBookImage" opacity="0.9" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -26,65 +26,6 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <HBox fx:id="hboxStar" alignment="CENTER" opacity="0.9">
-               <children>
-                  <ImageView fx:id="starOne" disable="true" fitHeight="35.0" fitWidth="30.0" onMouseClicked="#starOneAction" onMouseEntered="#starOneHover" onMouseExited="#starOneExit" opacity="0.4" pickOnBounds="true" preserveRatio="true" styleClass="starMouseHover">
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </HBox.margin>
-                     <image>
-                        <Image url="@../image/star.png" />
-                     </image>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </ImageView>
-                  <ImageView fx:id="starTwo" disable="true" fitHeight="35.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0" onMouseClicked="#starTwoAction" onMouseEntered="#starTwoHover" onMouseExited="#starTwoExit" opacity="0.4" pickOnBounds="true" preserveRatio="true" styleClass="starMouseHover">
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </HBox.margin>
-                     <image>
-                        <Image url="@../image/star.png" />
-                     </image>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </ImageView>
-                  <ImageView fx:id="starThree" disable="true" fitHeight="35.0" fitWidth="30.0" layoutX="49.0" layoutY="10.0" onMouseClicked="#starThreeAction" onMouseEntered="#starThreeHover" onMouseExited="#starThreeExit" opacity="0.4" pickOnBounds="true" preserveRatio="true" styleClass="starMouseHover">
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </HBox.margin>
-                     <image>
-                        <Image url="@../image/star.png" />
-                     </image>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </ImageView>
-                  <ImageView fx:id="starFour" disable="true" fitHeight="35.0" fitWidth="30.0" layoutX="88.0" layoutY="10.0" onMouseClicked="#starFourAction" onMouseEntered="#starFourHover" onMouseExited="#starFourExit" opacity="0.4" pickOnBounds="true" preserveRatio="true" styleClass="starMouseHover">
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </HBox.margin>
-                     <image>
-                        <Image url="@../image/star.png" />
-                     </image>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </ImageView>
-                  <ImageView fx:id="starFive" disable="true" fitHeight="35.0" fitWidth="30.0" layoutX="127.0" layoutY="10.0" onMouseClicked="#starFiveAction" onMouseEntered="#starFiveHover" onMouseExited="#starFiveExit" opacity="0.4" pickOnBounds="true" preserveRatio="true" styleClass="starMouseHover">
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </HBox.margin>
-                     <image>
-                        <Image url="@../image/star.png" />
-                     </image>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </ImageView>
-               </children>
-            </HBox>
          </children>
          <HBox.margin>
             <Insets bottom="5.0" top="10.0" />

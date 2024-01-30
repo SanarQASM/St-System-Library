@@ -1,5 +1,6 @@
 package application;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -30,7 +31,7 @@ public class DatabaseConnection {
 	public boolean checkUsername(String username) {
 		boolean result = false;
 		try {
-			String query = "SELECT username FROM system_user WHERE username=?;";
+			String query = "SELECT username FROM register WHERE username=?;";
 			PreparedStatement prmt = createConnection().prepareStatement(query);
 			prmt.setString(1, username);
 			ResultSet rs = prmt.executeQuery();
@@ -53,7 +54,7 @@ public class DatabaseConnection {
 	public boolean checkPasswordThrougUsername(String username,String password) {
 		boolean result = false;
 		try {
-			String query = "SELECT password FROM system_user WHERE username=?;";
+			String query = "SELECT password FROM register WHERE username=?;";
 			PreparedStatement prmt = createConnection().prepareStatement(query);
 			prmt.setString(1, username);
 			ResultSet rs = prmt.executeQuery();
@@ -75,8 +76,7 @@ public class DatabaseConnection {
 	public boolean checkPasswordThrougEmail(String email,String password) {
 		boolean result = false;
 		try {
-			String query = "SELECT password FROM system_user WHERE "
-					+ "ID =(SELECT system_user_id FROM register WHERE email=?);";
+			String query = "SELECT password FROM register WHERE email=?;";
 			PreparedStatement prmt = createConnection().prepareStatement(query);
 			prmt.setString(1, email);
 			ResultSet rs = prmt.executeQuery();
@@ -95,14 +95,15 @@ public class DatabaseConnection {
 		}
 		return result;
 	}
-	public void setAllInformationIndatabase(String username, int questionIndex, String answer, String gmail) {
+	public void setAllInformationIndatabase(String username, String password, String email, int question_index,String answer) {
 		try {
-			String query = "INSERT INTO register (question_index, answer, system_user_id,email) VALUES (?, ?, (SELECT ID FROM system_user WHERE username = ?),?);";
+			String query = "INSERT INTO register(username,password,email,question_index,answer) VALUES (?,?,?,?,?);";
 			PreparedStatement prmt = createConnection().prepareStatement(query);
-			prmt.setInt(1, questionIndex);
-			prmt.setString(2, answer);
-			prmt.setString(3, username);
-			prmt.setString(4, gmail);
+			prmt.setString(1, username);
+			prmt.setString(2, password);
+			prmt.setString(3, email);
+			prmt.setInt(4, question_index);
+			prmt.setString(5,answer);
 			prmt.executeUpdate();
 			prmt.close();
 			closeConnection();
@@ -113,7 +114,7 @@ public class DatabaseConnection {
 
 	public void checkAnswerAndQuestion(String username, int indexQuestion, String forgetAnswer) {
 		try {
-			String query = "SELECT question_index, answer FROM register WHERE system_user_id=(SELECT ID FROM system_user WHERE username=?);";
+			String query = "SELECT question_index, answer FROM register WHERE username=?;";
 			PreparedStatement prmt = createConnection().prepareStatement(query);
 			prmt.setString(1, username);
 			ResultSet rs = prmt.executeQuery();
@@ -138,7 +139,7 @@ public class DatabaseConnection {
 	public boolean checkToSameOldPass(String username, String newPassword) {
 		boolean samePassword = false;
 		try {
-			String query = "SELECT password FROM system_user WHERE username = ?;";
+			String query = "SELECT password FROM register WHERE username = ?;";
 			PreparedStatement prmt = createConnection().prepareStatement(query);
 			prmt.setString(1, username);
 			ResultSet rs = prmt.executeQuery();
@@ -159,7 +160,7 @@ public class DatabaseConnection {
 
 	public void setNewToOldPassword(String username, String newPassword) {
 		try {
-			String query = "UPDATE system_user SET password = ? WHERE username = ?;";
+			String query = "UPDATE register SET password = ? WHERE username = ?;";
 			PreparedStatement prmt = createConnection().prepareStatement(query);
 			prmt.setString(1, newPassword);
 			prmt.setString(2, username);
@@ -174,7 +175,7 @@ public class DatabaseConnection {
 	public boolean checkToSameUsername(String newUsername) {
 		boolean result = false;
 		try {
-			String query = "SELECT username FROM system_user WHERE username =?;";
+			String query = "SELECT username FROM register WHERE username =?;";
 			PreparedStatement prmt = createConnection().prepareStatement(query);
 			prmt.setString(1, newUsername);
 			ResultSet rs = prmt.executeQuery();
@@ -195,7 +196,7 @@ public class DatabaseConnection {
 
 	public void setOldWithNewUsername(String oldUsername, String newUsername) {
 		try {
-			String query = "UPDATE system_user SET username = ? WHERE username = ?;";
+			String query = "UPDATE register SET username = ? WHERE username = ?;";
 			PreparedStatement prmt = createConnection().prepareStatement(query);
 			prmt.setString(1, newUsername);
 			prmt.setString(2, oldUsername);
@@ -205,21 +206,6 @@ public class DatabaseConnection {
 		} catch (ClassNotFoundException | SQLException ex) {
 			System.out.println(ex);
 			System.out.println("errort haya la set new username");
-		}
-	}
-
-	public void setUsernameAndPassword(String username, String password) {
-		try {
-			String query = "INSERT INTO system_user (username, password) VALUES (?, ?);";
-			PreparedStatement prmt = createConnection().prepareStatement(query);
-	            prmt.setString(1, username);
-	            prmt.setString(2, password);
-	            prmt.executeUpdate();
-	            prmt.close();
-	            closeConnection();
-		} catch (ClassNotFoundException | SQLException ex) {
-			System.out.println(ex);
-			System.out.println("errort haya la set username password");
 		}
 	}
 
@@ -248,8 +234,7 @@ public class DatabaseConnection {
 	public String getUsernameByEmail(String email) {
 		String result="";
 		try {
-			String query = "SELECT username FROM system_user WHERE "
-					+ "ID =(SELECT system_user_id FROM register WHERE email=?);";
+			String query = "SELECT username FROM register WHERE email=?;";
 			PreparedStatement prmt = createConnection().prepareStatement(query);
 			prmt.setString(1, email);
 			ResultSet rs = prmt.executeQuery();
@@ -269,10 +254,7 @@ public class DatabaseConnection {
 	public boolean checkToSameOldPassWithEmail(String email, String password) {
 		boolean result =false;
 		try {
-			String query = "SELECT system_user.password "
-					+ "FROM system_user "
-					+ "JOIN register ON system_user.ID = register.system_user_id "
-					+ "WHERE register.email = ?;";
+			String query = "SELECT password FROM register WHERE email = ?;";
 			PreparedStatement prmt = createConnection().prepareStatement(query);
 			prmt.setString(1, email);
 			ResultSet rs = prmt.executeQuery();
@@ -294,11 +276,7 @@ public class DatabaseConnection {
 
 	public void setNewToOldPasswordWithEmail(String email, String password) {
 		try {
-			String query = "UPDATE system_user "
-		             + "JOIN register ON system_user.ID = register.system_user_id "
-		             + "SET system_user.password = ? "
-		             + "WHERE register.email = ?;";
-		             
+			String query = "UPDATE register SET password = ? WHERE email = ?;";
 			PreparedStatement prmt = createConnection().prepareStatement(query);
 			prmt.setString(1, password);
 			prmt.setString(2, email);
@@ -306,15 +284,13 @@ public class DatabaseConnection {
 			prmt.close();
 			closeConnection();
 		} catch (ClassNotFoundException | SQLException ex) {
-			System.out.println(ex);
 			System.out.println("errort haya la set same old password with email");
 		}
 	}
 
 	public void setNewEmailToOldThroughUsername(String username, String oldEmail) {
 		try {
-			String query = "UPDATE register SET email = ? WHERE system_user_id ="
-					+ " (SELECT ID FROM system_user WHERE username = ?)";
+			String query = "UPDATE register SET email = ? WHERE username = ?";
 
             PreparedStatement prmt = createConnection().prepareStatement(query);
                 prmt.setString(1, oldEmail);
@@ -326,6 +302,11 @@ public class DatabaseConnection {
 			System.out.println(ex);
 			System.out.println("errort haya la set same new email with username");
 		}
+		
+	}
+
+	public void addBookInformationByUsername(String username, String bookName, String tempUrl, String description,
+			String language, String numberOfPage, String publisher, String reward, String year, File file) {
 		
 	}
 

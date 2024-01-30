@@ -16,7 +16,7 @@
 		    <artifactId>javafx-controls</artifactId>
 		    <version>22-ea+16</version>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
 		<dependency>
 		    <groupId>com.mysql</groupId>

@@ -3,6 +3,7 @@ package application;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.prefs.Preferences;
 import org.controlsfx.control.Notifications;
 import javafx.animation.ParallelTransition;
 import javafx.animation.RotateTransition;
@@ -15,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -41,7 +43,8 @@ public class accountController implements Initializable {
 	private boolean answerIndatabse;
 	private static Stage tempStage;
 	private static accountController aC;
-	
+	private Preferences pref = Preferences.userRoot().node("Rememberme");
+    
 	@FXML
     private Button alreadyHaveAccountButton;
 
@@ -141,6 +144,9 @@ public class accountController implements Initializable {
     @FXML
     private TextField su_username; 
     
+    @FXML
+    private CheckBox rememberMe;
+    
     
 	public void setStage(Stage stage) {
 		tempStage = stage;
@@ -235,6 +241,14 @@ public class accountController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+	        String usr = null;
+	        usr = pref.get("si_username", usr);
+	        si_username.setText(usr);
+
+	        String pss = null;
+	        pss = pref.get("si_passwordPass", pss);
+	        si_passwordPass.setText(pss);
+	        si_passwordText.setText(pss);
 		String questionArray[] = { "What was the first car you owned?", "Who was your first teacher?",
 				"Where was your first job?", "What was the first album you owned",
 				"In which city were you first kissed?", "What is the name of your favorite food?" };
@@ -243,9 +257,17 @@ public class accountController implements Initializable {
 		forgetPassCombo.getItems().addAll(questionArray);
 	}
 
+
+    
 	@FXML
 	void si_logIn(ActionEvent event) throws IOException {
 		si_username.setText(si_username.getText().trim());
+			if(rememberMe.isSelected()){
+		            checked(true);
+		        }
+		        else{
+		            checked(false);
+		        }
 			if(usernameOrEmail()){
 			checkUsernameSi();
 			}
@@ -259,8 +281,24 @@ public class accountController implements Initializable {
 			if (usernameSi && passwordSi) {
 				successfullyLoggedIn();
 			}
+		        
 		
 	}
+	public final void checked(boolean remember){
+        if(remember == true){
+            saveemailpass(si_username.getText(), si_passwordPass.getText());
+        }
+    }
+	
+	 public void saveemailpass(String Email, String Pass){
+	        if(!(Email == null || Pass == null)) {
+	            String user = Email;
+	            pref.put("si_username", user);
+	            String pass = Pass;
+	            pref.put("si_passwordPass", pass);
+	            pref.put("si_passwordText", pass);
+	        }
+	    }
 
 	private void successfullyLoggedIn() throws IOException {
 		if (usernameOrEmail()) {
@@ -325,7 +363,8 @@ public class accountController implements Initializable {
 			si_username.setStyle("-fx-border-color: red;");
 		}
 		else {
-			if (!(checkUserNameIndatabase())) {
+			DatabaseConnection databaseCon=new DatabaseConnection ();
+			if (!(databaseCon.checkUsername(si_username.getText()))) {
 				si_errorUserName.setText("not found!");
 			} else {
 				si_errorUserName.setText("");
@@ -335,10 +374,6 @@ public class accountController implements Initializable {
 		}
 	}
 
-	public boolean checkUserNameIndatabase() {
-		DatabaseConnection databaseCon = new DatabaseConnection();
-		return databaseCon.checkUsername(si_username.getText());
-	}
 
 	private void checkPasswordSi() throws IOException {
 		if (!(si_passwordPass.isVisible())) {
@@ -427,8 +462,7 @@ public class accountController implements Initializable {
 	public void registerDone() {
 		enterCodeController eCC = new enterCodeController();
 		DatabaseConnection databaseCon = new DatabaseConnection();
-		databaseCon.setUsernameAndPassword(su_username.getText(), su_passwordPass.getText());
-		databaseCon.setAllInformationIndatabase(su_username.getText(), findIndexQuestoin(), su_answer.getText(), eCC.getTempEmail());
+		databaseCon.setAllInformationIndatabase(su_username.getText(),su_passwordPass.getText(),eCC.getTempEmail(), findIndexQuestoin(), su_answer.getText());
 		TranslateTransition slider = new TranslateTransition();
 		slider.setNode(anchorForm);
 		slider.setToX(0);

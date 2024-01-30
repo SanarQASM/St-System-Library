@@ -3,6 +3,7 @@
 <?import java.lang.String?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
@@ -43,7 +44,7 @@
                         <Image url="@../image/login.png" />
                      </image>
                   </ImageView>
-                  <Hyperlink focusTraversable="false" layoutX="45.0" layoutY="256.0" onAction="#forgetPassword" prefHeight="23.0" prefWidth="113.0" style="-fx-text-fill: #00b4d8;" styleClass="forgetPasswordHyperlink" stylesheets="@application.css" text="Forget Password" textFill="#00b4d8" underline="true">
+                  <Hyperlink focusTraversable="false" layoutX="163.0" layoutY="329.0" onAction="#forgetPassword" prefHeight="23.0" prefWidth="113.0" style="-fx-text-fill: #00b4d8;" styleClass="forgetPasswordHyperlink" stylesheets="@application.css" text="Forget Password" textFill="#00b4d8" underline="true">
                      <font>
                         <Font name="Perpetua Bold Italic" size="14.0" />
                      </font>
@@ -103,6 +104,11 @@
                         <Font name="Times New Roman Bold" size="10.0" />
                      </font>
                   </Label>
+                  <CheckBox fx:id="rememberMe" layoutX="45.0" layoutY="260.0" mnemonicParsing="false" text="Remember Me" textFill="#00b4d8">
+                     <font>
+                        <Font name="Rockwell Bold" size="10.0" />
+                     </font>
+                  </CheckBox>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="registerForm" layoutX="5.0" layoutY="5.0" prefHeight="400.0" prefWidth="300.0" styleClass="bothForm" stylesheets="@application.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="0.0">

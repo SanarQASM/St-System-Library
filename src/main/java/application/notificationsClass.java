@@ -79,5 +79,32 @@ public class notificationsClass {
 				.graphic(new ImageView(image));
 		notification.show();
 	}
+	public void showNotificationSendToReview() {
+		Image image=new Image(getClass().getResource("/image/review.png").toString());
+		Notifications notification=Notifications.create().title("Book added successfully")
+				.text("Please wait for the review, we will show it in the \"Additional books after the review\"")
+				.darkStyle()
+				.hideAfter(Duration.seconds(5))
+				.graphic(new ImageView(image));
+		notification.show();
+	}
+	public void showNotificationFieldEmpty() {
+		Image image=new Image(getClass().getResource("/image/error.png").toString());
+		Notifications notification=Notifications.create().title("The information is incorrect")
+				.text("Look at the data again and add it")
+				.darkStyle()
+				.hideAfter(Duration.seconds(5))
+				.graphic(new ImageView(image));
+		notification.show();
+	}
+	public void showNotificationInvalideType() {
+		Image image=new Image(getClass().getResource("/image/invalid.png").toString());
+		Notifications notification=Notifications.create().title("File type is not allowed")
+				.text("Please verify the file type and try again")
+				.darkStyle()
+				.hideAfter(Duration.seconds(5))
+				.graphic(new ImageView(image));
+		notification.show();
+	}
 	
 }

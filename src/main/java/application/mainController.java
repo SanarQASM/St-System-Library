@@ -17,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
@@ -30,12 +31,16 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class mainController implements Initializable {
+	
 	@FXML
 	private AnchorPane TopBookForm;
 
 	@FXML
 	private AnchorPane browseForm;
 
+    @FXML
+    private ScrollPane srcollPane;
+    
 	@FXML
 	private HBox browseTab;
 
@@ -177,20 +182,34 @@ public class mainController implements Initializable {
 
 	@FXML
 	public void addBookButton(ActionEvent event) throws IOException {
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(getClass().getResource("/fxmlFile/bookAddedScene.fxml"));
-		HBox hbox = loader.load();// loady main hbox dakat
-		bookController bC = loader.getController();// controllery badast dene
-		bC.setMainController(this);// methodeka la naw bookController
-		count++;// bo zanini zhmaray ktab
-		countBook.setText("Last add is: " + count);// agar ktab zyad bkre label dagore
-		String countId = "Hbox" + index;// lera String bo id nwe drust dakain
-		hbox.setId(countId);// bo har hboxek id nwe daxl akain
-		listOfHbox.add(hbox);// listek la hbox drust dakain bo away la regay aw lista hbox zyad bkain bo hbox
-								// scroll
-		addAndGenerateIdForHbox();// danani id bo har hboxek wa zyad krdni bo scroll pane
-		addRecommand(index);// pash drust krdni vboxeki tr drust akain bo recommend book
-		index++;
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFile/addNewBook.fxml"));
+		Parent root = loader.load();
+//		HBox hbox = loader.load();// loady main hbox dakat
+//		count++;// bo zanini zhmaray ktab
+//		countBook.setText("Last add is: " + count);// agar ktab zyad bkre label dagore
+//		String countId = "Hbox" + index;// lera String bo id nwe drust dakain
+//		hbox.setId(countId);// bo har hboxek id nwe daxl akain
+//		listOfHbox.add(hbox);// listek la hbox drust dakain bo away la regay aw lista hbox zyad bkain bo hbox
+//								// scroll
+//		addAndGenerateIdForHbox();// danani id bo har hboxek wa zyad krdni bo scroll pane
+//		addRecommand(index);// pash drust krdni vboxeki tr drust akain bo recommend book
+//		index++;
+		Scene scene = new Scene(root);
+		Stage stage = new Stage();
+		scene.getStylesheets().add(getClass().getResource("/fxmlFile/application.css").toExternalForm());
+		stage.setScene(scene);
+		stage.setTitle("System Book St Library");
+		Image image =new Image(getClass().getResource("/image/mainImageBookSystem.png").toString());
+		addBookInformation aDI=new addBookInformation();
+		aDI.setStage(stage);
+		tempStage.hide();
+		stage.getIcons().add(image);
+		stage.show();
+		stage.setOnCloseRequest(event1 -> {
+			event1.consume();
+			Main main = new Main();
+			main.logout(stage);
+		});
 	}
 
 	public void addAndGenerateIdForHbox() {
@@ -249,7 +268,7 @@ public class mainController implements Initializable {
 				row++;
 			}
 			gridPane.add(listOfVbox.get(randomNumbers.get(i)), column++, row);// tawakw size randomnumber tawaw dabe atu
-																				// vbox rash bkawa ba pey index
+			// vbox rash bkawa ba pey index
 
 		}
 	}
@@ -296,6 +315,7 @@ public class mainController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+	    srcollPane.setStyle("-fx-background-color: black;");
 		usernameLabel.setText(tempUsernameAccount);
 		HBox allHboxTab[] = { yourShelvesTab, readingTab, historyTab, favoritesTab, browseTab, categoriesTab,
 				topBookTab, uploadedTab };

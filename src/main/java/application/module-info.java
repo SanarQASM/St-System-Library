@@ -9,7 +9,8 @@ module StLibrary {
     requires org.controlsfx.controls;
     requires java.logging;
     requires jakarta.activation;
-
+	requires java.prefs;
+	requires java.desktop;
     opens application to javafx.fxml;
     exports application;
 }
