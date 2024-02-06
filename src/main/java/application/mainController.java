@@ -63,9 +63,6 @@ public class mainController implements Initializable {
 	private HBox historyTab;
 
 	@FXML
-	private ImageView log_out_Button;
-
-	@FXML
 	private AnchorPane mainForm;
 
 	@FXML

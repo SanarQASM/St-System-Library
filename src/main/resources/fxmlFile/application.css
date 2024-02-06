@@ -74,14 +74,15 @@
 	-fx-border-radius: 10;
 	-fx-effect: dropshadow( gaussian , rgba(192,192,192,0.6) , 10, 0.5 , 2 , 2 );
 }
+
 .switchAnchor{
 	-fx-background-color: linear-gradient(to top left , #ff003f, #00b4d8);
 }
 .hboxAddBook{
     -fx-background-color: linear-gradient(to left bottom , #ff003f, #00b4d8);
 }
-.hboxAddBook:hover{
-    -fx-background-color: linear-gradient(to top left , #ff003f, #00b4d8);
+.background{
+	-fx-background-color: linear-gradient(to left bottom , #ca4163, #00b4d8);
 }
 .actionForAllButton:pressed {
 	-fx-background-color: linear-gradient(to top left , #2986cc, #9fc5e8);
@@ -118,6 +119,27 @@
 	-fx-border-radius: 5px;
 	-fx-border-width: 0.2px;
 }
+.bookInformationHover:hover{
+	-fx-border-color: black;
+	-fx-border-width: 0 0 2px 0 ;
+	-fx-border-style: solid;
+	-fx-text-fill: white;
+	-fx-prompt-text-fill:white;
+}
+.bookInformationHover{
+	-fx-border-color: white;
+	-fx-border-style: solid;
+	-fx-border-radius: 5px;
+	-fx-border-width: 0.5px;
+	-fx-text-fill: black;
+	-fx-prompt-text-fill:black;
+}
+.labelBookInformation{
+	-fx-border-color: black;
+	-fx-border-style: solid;
+	-fx-border-radius:5px ;
+	-fx-border-width: 0 0 0.5px 0;
+}
 .comboBox{
 	-fx-font-family: Rockwell Condensed;
 	-fx-font-size: 14;
@@ -127,11 +149,11 @@
 }
 .comboBoxTextItem .list-cell {
 	-fx-background-color: #0C356A;
-    -fx-text-fill: red;
+    -fx-text-fill: white;
 }
 .comboBoxTextHover .list-cell:hover {
 	-fx-cursor: hand;
-    -fx-background-color: #00b4d8;
+    -fx-background-color: black;
 }
 .comboBoxTextSelected .list-cell:selected {
     -fx-background-color: #0077b6;

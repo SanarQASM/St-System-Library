@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.accountController">
+<StackPane fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.accountController">
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="600.0">
          <children>
@@ -39,7 +39,7 @@
                         <String fx:value="textInformation" />
                      </styleClass>
                   </TextField>
-                  <ImageView fitHeight="68.0" fitWidth="71.0" layoutX="109.0" layoutY="79.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="logInIcon" fitHeight="68.0" fitWidth="71.0" layoutX="109.0" layoutY="79.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../image/login.png" />
                      </image>
@@ -49,7 +49,7 @@
                         <Font name="Perpetua Bold Italic" size="14.0" />
                      </font>
                   </Hyperlink>
-                  <Button fx:id="loginButton" alignment="CENTER" layoutX="70.0" layoutY="289.0" mnemonicParsing="false" onAction="#si_logIn" prefHeight="40.0" prefWidth="155.0" stylesheets="@application.css" text="Log In" textFill="WHITE">
+                  <Button alignment="CENTER" layoutX="70.0" layoutY="289.0" mnemonicParsing="false" onAction="#si_logIn" prefHeight="40.0" prefWidth="155.0" stylesheets="@application.css" text="Log In" textFill="WHITE">
                      <font>
                         <Font name="Rockwell Condensed Bold" size="16.0" />
                      </font>
@@ -111,7 +111,7 @@
                   </CheckBox>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="registerForm" layoutX="5.0" layoutY="5.0" prefHeight="400.0" prefWidth="300.0" styleClass="bothForm" stylesheets="@application.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane layoutX="5.0" layoutY="5.0" prefHeight="400.0" prefWidth="300.0" styleClass="bothForm" stylesheets="@application.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="68.0" layoutY="18.0" prefHeight="26.0" prefWidth="165.0" style="-fx-border-color: #00b4d8;" styleClass="textLabel" stylesheets="@application.css" text="Register Account" textAlignment="CENTER" textFill="#00b4d8">
                      <font>
@@ -237,7 +237,7 @@
                         <Font name="Rockwell Condensed Bold" size="22.0" />
                      </font>
                   </Label>
-                  <ImageView fitHeight="81.0" fitWidth="77.0" layoutX="105.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="forgetIcon" fitHeight="81.0" fitWidth="77.0" layoutX="105.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../image/forgot-password.png" />
                      </image>
@@ -280,19 +280,6 @@
                         <Font name="Times New Roman Bold" size="10.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="su_passwordText1" focusTraversable="false" layoutX="50.0" layoutY="189.0" prefHeight="35.0" prefWidth="200.0" promptText="password" stylesheets="@application.css" visible="false">
-                     <font>
-                        <Font name="Bodoni MT" size="15.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="TEXT" />
-                     </cursor>
-                     <styleClass>
-                        <String fx:value="enterInformation" />
-                        <String fx:value="transmate" />
-                        <String fx:value="textInformation" />
-                     </styleClass>
-                  </TextField>
                   <TextField fx:id="forgetAnswer" focusTraversable="false" layoutX="50.0" layoutY="242.0" prefHeight="35.0" prefWidth="200.0" promptText="answer" stylesheets="@application.css">
                      <font>
                         <Font name="Bodoni MT" size="15.0" />

@@ -2,9 +2,12 @@ package application;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.prefs.Preferences;
-import org.controlsfx.control.Notifications;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
+import javafx.scene.layout.StackPane;
 import javafx.animation.ParallelTransition;
 import javafx.animation.RotateTransition;
 import javafx.animation.ScaleTransition;
@@ -43,111 +46,110 @@ public class accountController implements Initializable {
 	private boolean answerIndatabse;
 	private static Stage tempStage;
 	private static accountController aC;
-	private Preferences pref = Preferences.userRoot().node("Rememberme");
-    
+	private final Preferences pref = Preferences.userRoot().node("Rememberme");
+
 	@FXML
-    private Button alreadyHaveAccountButton;
+	private Button alreadyHaveAccountButton;
 
-    @FXML
-    private AnchorPane anchorForm;
+	@FXML
+	private AnchorPane anchorForm;
 
-    @FXML
-    private Button createNewAccountButton;
+	@FXML
+	private Button createNewAccountButton;
 
-    @FXML
-    private TextField forgetAnswer;
+	@FXML
+	private TextField forgetAnswer;
 
-    @FXML
-    private Label forgetAnswerError;
+	@FXML
+	private Label forgetAnswerError;
 
-    @FXML
-    private ComboBox<String> forgetPassCombo;
+	@FXML
+	private ImageView forgetIcon;
 
-    @FXML
-    private AnchorPane forgetPasswordForm;
+	@FXML
+	private ComboBox<String> forgetPassCombo;
 
-    @FXML
-    private AnchorPane forgetPasswordWayForm;
+	@FXML
+	private AnchorPane forgetPasswordForm;
 
-    @FXML
-    private Label forgetQuestionError;
+	@FXML
+	private AnchorPane forgetPasswordWayForm;
 
-    @FXML
-    private TextField forgetUsername;
+	@FXML
+	private Label forgetQuestionError;
 
-    @FXML
-    private Label forgetUsernameError;
+	@FXML
+	private TextField forgetUsername;
 
-    @FXML
-    private Button loginButton;
+	@FXML
+	private Label forgetUsernameError;
 
-    @FXML
-    private AnchorPane loginForm;
+	@FXML
+	private ImageView logInIcon;
 
-    @FXML
-    private ImageView logoSystem;
+	@FXML
+	private AnchorPane loginForm;
 
-    @FXML
-    private AnchorPane registerForm;
+	@FXML
+	private ImageView logoSystem;
 
-    @FXML
-    private ImageView shapeImage;
+	@FXML
+	private CheckBox rememberMe;
 
-    @FXML
-    private ImageView showPass;
+	@FXML
+	private ImageView shapeImage;
 
-    @FXML
-    private ImageView showPass1;
+	@FXML
+	private ImageView showPass;
 
-    @FXML
-    private Label si_errorPassword;
+	@FXML
+	private ImageView showPass1;
 
-    @FXML
-    private Label si_errorUserName;
+	@FXML
+	private Label si_errorPassword;
 
-    @FXML
-    private PasswordField si_passwordPass;
+	@FXML
+	private Label si_errorUserName;
 
-    @FXML
-    private TextField si_passwordText;
+	@FXML
+	private PasswordField si_passwordPass;
 
-    @FXML
-    private TextField si_username;
+	@FXML
+	private TextField si_passwordText;
 
-    @FXML
-    private TextField su_answer;
+	@FXML
+	private TextField si_username;
 
-    @FXML
-    private Label su_errorAnswer;
+	@FXML
+	private StackPane stackPane;
 
-    @FXML
-    private Label su_errorQuestion;
+	@FXML
+	private TextField su_answer;
 
-    @FXML
-    private Label su_errorUserName;
+	@FXML
+	private Label su_errorAnswer;
 
-    @FXML
-    private Label su_errorUserPass;
+	@FXML
+	private Label su_errorQuestion;
 
-    @FXML
-    private PasswordField su_passwordPass;
+	@FXML
+	private Label su_errorUserName;
 
-    @FXML
-    private TextField su_passwordText;
+	@FXML
+	private Label su_errorUserPass;
 
-    @FXML
-    private TextField su_passwordText1;
+	@FXML
+	private PasswordField su_passwordPass;
 
-    @FXML
-    private ComboBox<String> su_question;
+	@FXML
+	private TextField su_passwordText;
 
-    @FXML
-    private TextField su_username; 
-    
-    @FXML
-    private CheckBox rememberMe;
-    
-    
+	@FXML
+	private ComboBox<String> su_question;
+
+	@FXML
+	private TextField su_username;
+
 	public void setStage(Stage stage) {
 		tempStage = stage;
 	}
@@ -157,34 +159,34 @@ public class accountController implements Initializable {
 
 	@FXML
 	void showPassAction(MouseEvent event) {
-		if (showPass.getImage().getUrl().equals(getClass().getResource("/image/showPass.png").toString())) {
+		if (showPass.getImage().getUrl().equals(Objects.requireNonNull(getClass().getResource("/image/showPass.png")).toString())) {
 			si_passwordPass.setVisible(false);
 		    si_passwordText.setVisible(true);
 		    si_passwordText.setText(si_passwordPass.getText());
-		    Image image = new Image(getClass().getResource("/image/hidePass.png").toString());
+		    Image image = new Image(Objects.requireNonNull(getClass().getResource("/image/hidePass.png")).toString());
 		    showPass.setImage(image);
 		} else {
 			si_passwordPass.setVisible(true);
 			si_passwordText.setVisible(false);
 			si_passwordPass.setText(si_passwordText.getText());
-			Image image = new Image(getClass().getResource("/image/showPass.png").toString());
+			Image image = new Image(Objects.requireNonNull(getClass().getResource("/image/showPass.png")).toString());
 			showPass.setImage(image);
 		}
 	}
 
 	@FXML
 	void showPassAction1(MouseEvent event) {
-		if (showPass1.getImage().getUrl().equals(getClass().getResource("/image/showPass.png").toString())) {
+		if (showPass1.getImage().getUrl().equals(Objects.requireNonNull(getClass().getResource("/image/showPass.png")).toString())) {
 			su_passwordPass.setVisible(false);
 			su_passwordText.setVisible(true);
 			su_passwordText.setText(su_passwordPass.getText());
-			Image image = new Image(getClass().getResource("/image/hidePass.png").toString());
+			Image image = new Image(Objects.requireNonNull(getClass().getResource("/image/hidePass.png")).toString());
 			showPass1.setImage(image);
 		} else {
 			su_passwordPass.setVisible(true);
 			su_passwordText.setVisible(false);
 			su_passwordPass.setText(su_passwordText.getText());
-			Image image = new Image(getClass().getResource("/image/showPass.png").toString());
+			Image image = new Image(Objects.requireNonNull(getClass().getResource("/image/showPass.png")).toString());
 			showPass1.setImage(image);
 		}
 	}
@@ -241,15 +243,14 @@ public class accountController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-	        String usr = null;
-	        usr = pref.get("si_username", usr);
+	        String usr;
+	        usr = pref.get("si_username", null);
 	        si_username.setText(usr);
-
-	        String pss = null;
-	        pss = pref.get("si_passwordPass", pss);
+	        String pss;
+	        pss = pref.get("si_passwordPass", null);
 	        si_passwordPass.setText(pss);
 	        si_passwordText.setText(pss);
-		String questionArray[] = { "What was the first car you owned?", "Who was your first teacher?",
+		String[] questionArray = { "What was the first car you owned?", "Who was your first teacher?",
 				"Where was your first job?", "What was the first album you owned",
 				"In which city were you first kissed?", "What is the name of your favorite food?" };
 
@@ -260,43 +261,59 @@ public class accountController implements Initializable {
 
     
 	@FXML
-	void si_logIn(ActionEvent event) throws IOException {
-		si_username.setText(si_username.getText().trim());
-			if(rememberMe.isSelected()){
-		            checked(true);
-		        }
-		        else{
-		            checked(false);
-		        }
-			if(usernameOrEmail()){
-			checkUsernameSi();
+	void si_logIn(ActionEvent event){
+		Task<Void> task = new Task<>() {
+			@Override
+			protected Void call(){
+                si_username.setText(si_username.getText().trim());
+                checked(rememberMe.isSelected());
+                if(usernameOrEmail()){
+                    checkUsernameSi();
+                }
+                else {
+                    checkEmailIndatabase();
+                }
+                checkPasswordSi();
+                if (!(si_passwordPass.isVisible())) {
+                    si_passwordPass.setText(si_passwordText.getText());
+                }
+				return null;
 			}
-			else {
-				checkEmailIndatabase();
-			}
-			checkPasswordSi();
-			if (!(si_passwordPass.isVisible())) {
-				si_passwordPass.setText(si_passwordText.getText());
-			}
-			if (usernameSi && passwordSi) {
-				successfullyLoggedIn();
-			}
-		        
-		
+		};
+		new Thread(task).start();
+		task.setOnSucceeded(_ -> {
+				if (usernameSi && passwordSi) {
+					try {
+						stackPane.setDisable(false);
+						Image image=new Image(Objects.requireNonNull(getClass().getResource(
+								"/image/login.png")).toString());
+						logInIcon.setImage(image);
+						successfullyLoggedIn();
+					} catch (IOException e) {
+						notificationsClass nC = new notificationsClass();
+						nC.showNotificaitonSomethingWrong();
+					}
+				}
+		});
+		Platform.runLater(() -> {
+			Image image=new Image(Objects.requireNonNull(getClass().getResource(
+					"/image/changeToLoading.gif")).toString());
+			logInIcon.setImage(image);
+			stackPane.setDisable(true);
+		});
 	}
+
 	public final void checked(boolean remember){
-        if(remember == true){
+        if(remember){
             saveemailpass(si_username.getText(), si_passwordPass.getText());
         }
     }
 	
 	 public void saveemailpass(String Email, String Pass){
 	        if(!(Email == null || Pass == null)) {
-	            String user = Email;
-	            pref.put("si_username", user);
-	            String pass = Pass;
-	            pref.put("si_passwordPass", pass);
-	            pref.put("si_passwordText", pass);
+                pref.put("si_username", Email);
+                pref.put("si_passwordPass", Pass);
+	            pref.put("si_passwordText", Pass);
 	        }
 	    }
 
@@ -311,14 +328,15 @@ public class accountController implements Initializable {
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		Stage stage = new Stage();
-		scene.getStylesheets().add(getClass().getResource("/fxmlFile/application.css").toExternalForm());
+		scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/fxmlFile/application.css")).toExternalForm());
 		stage.setScene(scene);
 		stage.setTitle("System Book St Library");
-		Image image =new Image(getClass().getResource("/image/mainImageBookSystem.png").toString());
+		Image image =new Image(Objects.requireNonNull(getClass().getResource("/image/mainImageBookSystem.png")).toString());
 		mainController mC=new mainController();
 		tempStage.close();
 		mC.setStage(stage);
 		stage.getIcons().add(image);
+        stage.setResizable(false);
 		stage.show();
 		stage.setOnCloseRequest(event -> {
 			event.consume();
@@ -331,14 +349,7 @@ public class accountController implements Initializable {
 	}
 
 	private boolean usernameOrEmail() {
-		boolean result =false;
-		if(si_username.getText().endsWith("@gmail.com")) {
-			result=false;
-		}
-		else {
-			result=true;
-		}
-		return result;
+        return (!si_username.getText().endsWith("@gmail.com"));
 	}
 
 	private void checkEmailIndatabase() {
@@ -355,7 +366,7 @@ public class accountController implements Initializable {
 			}
 		}
 	}
-	private void checkUsernameSi() throws IOException {
+	private void checkUsernameSi(){
 		if (si_username.getText().isEmpty()) {
 			si_errorUserName.setText("Empty!");
 		}else if (si_username.getText().length()>=15) {
@@ -375,7 +386,7 @@ public class accountController implements Initializable {
 	}
 
 
-	private void checkPasswordSi() throws IOException {
+	private void checkPasswordSi(){
 		if (!(si_passwordPass.isVisible())) {
 			si_passwordPass.setText(si_passwordText.getText());
 		}
@@ -414,27 +425,26 @@ public class accountController implements Initializable {
 	}
 
 	@FXML
-	void su_signUp(ActionEvent event) throws IOException {
-		DatabaseConnection databaseCon = new DatabaseConnection();
-		checkUsername();
-		checkPassword();
-		checkComboBox();
-		checkAnswer();
-		notHaveAccout = true;
-		if (databaseCon.checkUsername(su_username.getText())) {
-			su_errorUserName.setText("Username Is Takin!!!");
-			notHaveAccout = false;
-		}
-		if (userNameBool && passWord && answer && question && notHaveAccout) {
-			Image image=new Image(getClass().getResource("/image/emailMain.png").toString());
-			Notifications notification=Notifications.create().title("Email Address")
-					.text("Add your email address")
-					.darkStyle()
-					.hideAfter(Duration.seconds(5))
-					.graphic(new ImageView(image));
-			notification.show();
-			openSu_email();
-		}
+	void su_signUp(ActionEvent event){
+				DatabaseConnection databaseCon = new DatabaseConnection();
+				checkUsername();
+				checkPassword();
+				checkComboBox();
+				checkAnswer();
+				notHaveAccout = true;
+				if (databaseCon.checkUsername(su_username.getText())) {
+					su_errorUserName.setText("Username Is Takin!!!");
+					notHaveAccout = false;
+				}
+			if (userNameBool && passWord && answer && question && notHaveAccout) {
+				notificationsClass nC=new notificationsClass();
+				nC.showNotificationEnterEmail();
+				try {
+					openSu_email();
+				} catch (IOException e) {
+					nC.showNotificaitonSomethingWrong();
+				}
+			}
 	}
 
 	private void openSu_email() throws IOException {
@@ -442,14 +452,14 @@ public class accountController implements Initializable {
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		Stage stage = new Stage();
-		scene.getStylesheets().add(getClass().getResource("/fxmlFile/application.css").toExternalForm());
+		scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/fxmlFile/application.css")).toExternalForm());
 		stage.setScene(scene);
 		stage.setResizable(false);
 		stage.setTitle("Enter Email");
 		enterEmailController eEC = new enterEmailController();
 		eEC.setStage(stage);
 		tempStage.hide();
-		Image image =new Image(getClass().getResource("/image/gmail.png").toString());
+		Image image =new Image(Objects.requireNonNull(getClass().getResource("/image/gmail.png")).toString());
 		stage.getIcons().add(image);
 		stage.show();
 		stage.setOnCloseRequest(event1 -> {
@@ -508,7 +518,6 @@ public class accountController implements Initializable {
 			su_errorQuestion.setText("choose!");
 		} else {
 			su_errorQuestion.setText("");
-			su_errorQuestion.setStyle("-fx-border-color: #0077b6;");
 			question = true;
 		}
 	}
@@ -553,11 +562,7 @@ public class accountController implements Initializable {
 				countDigit++;
 			}
 		}
-		if (!(countDigit == 0) && !(countLetter == 0)) {
-			return true;
-		} else {
-			return false;
-		}
+        return !(countDigit == 0) && !(countLetter == 0);
 	}
 
 	private void checkUsername() {
@@ -594,11 +599,7 @@ public class accountController implements Initializable {
 				countDigit++;
 			}
 		}
-		if (!(countDigit == 0) && !(countLetter == 0)) {
-			return true;
-		} else {
-			return false;
-		}
+        return !(countDigit == 0) && !(countLetter == 0);
 
 	}
 
@@ -614,31 +615,56 @@ public class accountController implements Initializable {
 
 	@FXML
 	void proceed(ActionEvent event) throws IOException {
-		forgetUsername.setText(forgetUsername.getText().trim());
-		if(forgetUsername.getText().length()>=20) {
-			forgetUsernameError.setText("Too Long!!!");
-			forgetUsername.setStyle("-fx-border-color: red;");
-		}
-		forgetAnswer.setText(forgetAnswer.getText().trim());
-		if(forgetAnswer.getText().length()>=20) {
-			forgetAnswerError.setText("Too Long!!!");
-			forgetAnswer.setStyle("-fx-border-color: red;");
-		}
-		checkUsernameToEmpty();
-		if (questionIndatabase && answerIndatabse) {
-			forgetPasswordForm.setVisible(false);
-			openChangePasswordController(forgetUsername.getText());
-		}
+		Task<Void> task = new Task<>() {
+			@Override
+			protected Void call() throws IOException {
+				forgetUsername.setText(forgetUsername.getText().trim());
+				if(forgetUsername.getText().length()>=20) {
+					forgetUsernameError.setText("Too Long!!!");
+					forgetUsername.setStyle("-fx-border-color: red;");
+				}
+				forgetAnswer.setText(forgetAnswer.getText().trim());
+				if(forgetAnswer.getText().length()>=20) {
+					forgetAnswerError.setText("Too Long!!!");
+					forgetAnswer.setStyle("-fx-border-color: red;");
+				}
+				checkUsernameToEmpty();
+				return null;
+			}
+		};
+		new Thread(task).start();
+		task.setOnSucceeded(_ -> {
+			if (questionIndatabase && answerIndatabse) {
+				forgetPasswordForm.setVisible(false);
+                try {
+					stackPane.setDisable(false);
+					Image image=new Image(Objects.requireNonNull(getClass().getResource(
+							"/image/forgot-password.png")).toString());
+					forgetIcon.setImage(image);
+                    openChangePasswordController(forgetUsername.getText());
+                } catch (IOException e) {
+                    notificationsClass nC=new notificationsClass();
+					nC.showNotificaitonSomethingWrong();
+                }
+            }
+		});
+		Platform.runLater(() -> {
+			Image image=new Image(Objects.requireNonNull(getClass().getResource(
+					"/image/changeToLoading.gif")).toString());
+			forgetIcon.setImage(image);
+			stackPane.setDisable(true);
+		});
+
 	}
     public void openChangePasswordController(String wayToChange) throws IOException {
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFile/changePassword.fxml"));
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		Stage stage = new Stage();
-		scene.getStylesheets().add(getClass().getResource("/fxmlFile/application.css").toExternalForm());
+		scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/fxmlFile/application.css")).toExternalForm());
 		stage.setScene(scene);
 		stage.setTitle("Change Password");
-		Image image =new Image(getClass().getResource("/image/reset-password.png").toString());
+		Image image =new Image(Objects.requireNonNull(getClass().getResource("/image/reset-password.png")).toString());
 		changePasswordController cPC=new changePasswordController();
 		tempStage.hide();
 		cPC.setTempWayToChange(wayToChange);
@@ -693,7 +719,7 @@ public class accountController implements Initializable {
 			}
 	}
 
-	private void checkUsernameIndatabase() throws IOException {
+	private void checkUsernameIndatabase(){
 		DatabaseConnection databaseCon = new DatabaseConnection();
 		if (databaseCon.checkUsername(forgetUsername.getText())) {
 			usernameInFormatFound = true;
@@ -771,10 +797,10 @@ public class accountController implements Initializable {
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		Stage stage = new Stage();
-		scene.getStylesheets().add(getClass().getResource("/fxmlFile/application.css").toExternalForm());
+		scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/fxmlFile/application.css")).toExternalForm());
 		stage.setScene(scene);
 		stage.setTitle("Change Password");
-		Image image =new Image(getClass().getResource("/image/gmail.png").toString());
+		Image image =new Image(Objects.requireNonNull(getClass().getResource("/image/gmail.png")).toString());
 		changeEmailController cEC=new changeEmailController();
 		tempStage.close();
 		cEC.setStage(stage);
@@ -807,10 +833,10 @@ public class accountController implements Initializable {
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		Stage stage = new Stage();
-		scene.getStylesheets().add(getClass().getResource("/fxmlFile/application.css").toExternalForm());
+		scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/fxmlFile/application.css")).toExternalForm());
 		stage.setScene(scene);
 		stage.setTitle("Change Password");
-		Image image =new Image(getClass().getResource("/image/contactUs.png").toString());
+		Image image =new Image(Objects.requireNonNull(getClass().getResource("/image/contactUs.png")).toString());
 		stage.getIcons().add(image);
 		contactUsController aUC=new contactUsController();
 		aUC.setStgae(stage);

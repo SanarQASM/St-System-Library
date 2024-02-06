@@ -10,6 +10,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.control.Alert.AlertType;
 
+import java.util.Objects;
+
 public class Main extends Application {
 	long start;
 	@Override
@@ -20,9 +22,9 @@ public class Main extends Application {
 			Parent root = loader.load();
 			Scene scene = new Scene(root);
 			primaryStage.setTitle("ST Online Library System");
-			scene.getStylesheets().add(getClass().getResource("/fxmlFile/application.css").toExternalForm());
+			scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/fxmlFile/application.css")).toExternalForm());
 			primaryStage.setScene(scene);
-			Image image = new Image(getClass().getResource("/image/mainImage.png").toString());
+			Image image = new Image(Objects.requireNonNull(getClass().getResource("/image/mainImage.png")).toString());
 			primaryStage.getIcons().add(image);
 			accountController aC = loader.getController();
 			aC.setController(aC);
@@ -36,11 +38,12 @@ public class Main extends Application {
 			primaryStage.setResizable(false);
 			primaryStage.show();
 		} catch (Exception e) {
-			e.printStackTrace();
+			notificationsClass nC=new notificationsClass();
+			nC.showNotificaitonSomethingWrong();
 		}
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args){
 		launch(args);
 	}
 
@@ -51,7 +54,7 @@ public class Main extends Application {
 		alert.setContentText("Do you want to save before exiting?");
 		if (alert.showAndWait().get() == ButtonType.OK) {
 			long Duration = (System.nanoTime() - start) / 1_000_000_000;
-			System.out.println("the duration is: " + Duration);
+			System.out.println(STR."the duration is: \{Duration}");
 			stage.close();
 		}
 	}

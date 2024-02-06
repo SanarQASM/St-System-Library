@@ -28,7 +28,6 @@ public class emailSender {
 			String password = "yxvz opxx ahdm arka";
 			String host = "smtp.gmail.com";
 			String port = "587";
-			String sendEmailTo = to;
 			Properties properties = new Properties();
 			properties.put("mail.smtp.host", host);
 			properties.put("mail.smtp.port", port);
@@ -42,11 +41,10 @@ public class emailSender {
 			});
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(from));
-			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(sendEmailTo));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
 			message.setSubject("Login to System Book For Reader");
 			generateRandomNumber();
-			message.setText("Your code is: "
-					+"\"" + randomNumbers + "\""+" Don't share it with anyone");
+			message.setText(STR."Your code is: \"\{randomNumbers}\" Don't share it with anyone");
 			
 			Transport.send(message);
 		}catch (AddressException e) {
@@ -57,6 +55,7 @@ public class emailSender {
 		}
 		
 		catch(Exception e) {
+				e.printStackTrace();
 			System.out.println("errorot haya la send email");
 		}
 		return result;
@@ -113,6 +112,7 @@ public class emailSender {
 		result =1;
 	}
 	catch(Exception e) {
+		System.out.println(e);
 		System.out.println("errorot haya la send email");
 	}
 	return result;

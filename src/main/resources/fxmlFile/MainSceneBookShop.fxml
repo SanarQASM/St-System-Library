@@ -400,7 +400,7 @@
                               <Pane prefHeight="103.0" prefWidth="43.0" HBox.hgrow="ALWAYS" />
                               <HBox alignment="CENTER" prefHeight="103.0" prefWidth="352.0" stylesheets="@application.css">
                                  <children>
-                                    <ImageView fx:id="log_out_Button" fitHeight="53.0" fitWidth="58.0" onMouseClicked="#log_out" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="53.0" fitWidth="58.0" onMouseClicked="#log_out" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../image/log-out.png" />
                                        </image>

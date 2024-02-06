@@ -1,6 +1,10 @@
 package application;
 
 import java.io.IOException;
+import java.util.Objects;
+
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -14,33 +18,27 @@ import javafx.stage.Stage;
 
 public class changePasswordController {
 
-    @FXML
-    private AnchorPane changePassword;
+	@FXML
+	private TextField confirmationPassText;
 
-    @FXML
-    private Label confirmationPasswordError;
+	@FXML
+	private Label confirmationPasswordError;
 
-    @FXML
-    private PasswordField confirmationPasswordPass;
+	@FXML
+	private PasswordField confirmationPasswordPass;
 
-    @FXML
-    private TextField confirmationPasswordText;
+	@FXML
+	private Label newPasswordError;
 
-    @FXML
-    private Label newPasswordError;
+	@FXML
+	private PasswordField newPasswordPass;
 
-    @FXML
-    private PasswordField newPasswordPass;
+	@FXML
+	private TextField newPasswordText;
 
-    @FXML
-    private TextField newPasswordText;
+	@FXML
+	private ImageView showPasswordInChange;
 
-    @FXML
-    private ImageView showPasswordInChange;
-
-    @FXML
-    private TextField si_passwordText1;
-    
     private static String tempWayToChange;
     private static Stage stage;
 	private boolean confirmPassEntered;
@@ -60,7 +58,7 @@ public class changePasswordController {
 		newPasswordPass.setText("");
 		newPasswordError.setText("");
 		confirmationPasswordError.setText("");
-		confirmationPasswordText.setText("");
+		confirmationPassText.setText("");
 		confirmationPasswordPass.setText("");
 		stage.close();
 		if(accontCont!=null) {	
@@ -80,42 +78,47 @@ public class changePasswordController {
 		checkHaveConfirmPass();
 		if (!(newPasswordPass.isVisible())) {
 			newPasswordPass.setText(newPasswordText.getText());
-			confirmationPasswordPass.setText(confirmationPasswordText.getText());
+			confirmationPasswordPass.setText(confirmationPassText.getText());
 		}
-		if (newPassEntered && confirmPassEntered) {
-			accountController aC=new accountController();
-			if (!(aC.checkPassToHaveDigit(newPasswordPass.getText()))) {
-				newPasswordError.setText("Letter and Digit!");
-			} else {
-				newPasswordError.setText("");
-				if (bothPassIsEqual()) {
-					setNewPassToOldPass();
-				} else {
-					confirmationPasswordError.setText("Is not The Same!");
-				}
-			}
-		}
-		if (passwordIsChanged) {
-			stage.close();
-			if(accontCont!=null) {
-				accountController aC=new accountController();
-				aC.showStage();
-				aC.setAllFormVisabiliity();
-		        accontCont=null;
-			}else {
-				settingController sC=new settingController();
-				sC.showStage();
-			}
-			newPasswordPass.setText("");
-			newPasswordText.setText("");
-			confirmationPasswordPass.setText("");
-			confirmationPasswordText.setText("");
-			notificationsClass nC=new notificationsClass();
-			nC.showNotificaitonPasswordChangeSuccussfuly();
-		}
+					if (newPassEntered && confirmPassEntered) {
+						accountController aC=new accountController();
+						if (!(aC.checkPassToHaveDigit(newPasswordPass.getText()))) {
+							newPasswordError.setText("Letter and Digit!");
+						} else {
+							newPasswordError.setText("");
+							if (bothPassIsEqual()) {
+                                try {
+									setNewPassToOldPass();
+                                } catch (IOException e) {
+                                    notificationsClass nC=new notificationsClass();
+									nC.showNotificaitonSomethingWrong();
+                                }
+                            } else {
+								confirmationPasswordError.setText("Is not The Same!");
+							}
+						}
+					}
+					if (passwordIsChanged) {
+						stage.close();
+						if (accontCont != null) {
+							accountController aC = new accountController();
+							aC.showStage();
+							aC.setAllFormVisabiliity();
+							accontCont = null;
+						} else {
+							settingController sC = new settingController();
+							sC.showStage();
+						}
+						newPasswordPass.setText("");
+						newPasswordText.setText("");
+						confirmationPasswordPass.setText("");
+						confirmationPassText.setText("");
+						notificationsClass nC = new notificationsClass();
+						nC.showNotificaitonPasswordChangeSuccussfuly();
 		confirmPassEntered = false;
 		newPassEntered = false;
 		passwordIsChanged = false;
+		}
 	}
 
 	private boolean bothPassIsEqual() {
@@ -177,17 +180,17 @@ public class changePasswordController {
 			newPasswordPass.setVisible(false);
 			newPasswordText.setVisible(true);
 			confirmationPasswordPass.setVisible(false);
-			confirmationPasswordText.setVisible(true);
+			confirmationPassText.setVisible(true);
 			newPasswordText.setText(newPasswordPass.getText());
-			confirmationPasswordText.setText(confirmationPasswordPass.getText());
+			confirmationPassText.setText(confirmationPasswordPass.getText());
 			Image image = new Image(getClass().getResource("/image/hidePass.png").toString());
 			showPasswordInChange.setImage(image);
 		} else {
 			newPasswordPass.setVisible(true);
 			newPasswordText.setVisible(false);
 			confirmationPasswordPass.setVisible(true);
-			confirmationPasswordText.setVisible(false);
-			confirmationPasswordPass.setText(confirmationPasswordText.getText());
+			confirmationPassText.setVisible(false);
+			confirmationPasswordPass.setText(confirmationPassText.getText());
 			newPasswordPass.setText(newPasswordText.getText());
 			Image image = new Image(getClass().getResource("/image/showPass.png").toString());
 			showPasswordInChange.setImage(image);

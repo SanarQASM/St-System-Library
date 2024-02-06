@@ -1,6 +1,5 @@
 package application;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -46,7 +45,8 @@ public class DatabaseConnection {
 			closeConnection();
 
 		} catch (ClassNotFoundException | SQLException ex) {
-			System.out.println("errort haya la check username 1223344");
+			notificationsClass nC=new notificationsClass();
+			nC.showNotificaitonSomethingWrong();
 		}
 		return result;
 	}
@@ -69,7 +69,8 @@ public class DatabaseConnection {
 			closeConnection();
 
 		} catch (ClassNotFoundException | SQLException ex) {
-			System.out.println("errort haya la check password");
+			notificationsClass nC=new notificationsClass();
+			nC.showNotificaitonSomethingWrong();
 		}
 		return result;
 	}
@@ -91,7 +92,8 @@ public class DatabaseConnection {
 			closeConnection();
 
 		} catch (ClassNotFoundException | SQLException ex) {
-			System.out.println("errort haya la check password");
+			notificationsClass nC=new notificationsClass();
+			nC.showNotificaitonSomethingWrong();
 		}
 		return result;
 	}
@@ -108,7 +110,8 @@ public class DatabaseConnection {
 			prmt.close();
 			closeConnection();
 		} catch (ClassNotFoundException | SQLException ex) {
-			System.out.println("errort haya set all information");
+			notificationsClass nC=new notificationsClass();
+			nC.showNotificaitonSomethingWrong();
 		}
 	}
 
@@ -132,7 +135,8 @@ public class DatabaseConnection {
 			prmt.close();
 			closeConnection();
 		} catch (ClassNotFoundException | SQLException ex) {
-			System.out.println("errort haya check question");
+			notificationsClass nC=new notificationsClass();
+			nC.showNotificaitonSomethingWrong();
 		}
 	}
 
@@ -153,7 +157,8 @@ public class DatabaseConnection {
 			prmt.close();
 			closeConnection();
 		} catch (ClassNotFoundException | SQLException ex) {
-			System.out.println("errort haya la check same password");
+			notificationsClass nC=new notificationsClass();
+			nC.showNotificaitonSomethingWrong();
 		}
 		return samePassword;
 	}
@@ -168,7 +173,8 @@ public class DatabaseConnection {
 			prmt.close();
 			closeConnection();
 		} catch (ClassNotFoundException | SQLException ex) {
-			System.out.println("errort haya la set New to Old password");
+			notificationsClass nC=new notificationsClass();
+			nC.showNotificaitonSomethingWrong();
 		}
 	}
 
@@ -189,7 +195,8 @@ public class DatabaseConnection {
 			prmt.close();
 			closeConnection();
 		} catch (ClassNotFoundException | SQLException ex) {
-			System.out.println("errort haya la check new username");
+			notificationsClass nC=new notificationsClass();
+			nC.showNotificaitonSomethingWrong();
 		}
 		return result;
 	}
@@ -204,8 +211,8 @@ public class DatabaseConnection {
 			prmt.close();
 			closeConnection();
 		} catch (ClassNotFoundException | SQLException ex) {
-			System.out.println(ex);
-			System.out.println("errort haya la set new username");
+			notificationsClass nC=new notificationsClass();
+			nC.showNotificaitonSomethingWrong();
 		}
 	}
 
@@ -226,7 +233,8 @@ public class DatabaseConnection {
 			prmt.close();
 			closeConnection();
 		} catch (ClassNotFoundException | SQLException ex) {
-			System.out.println("errort haya la check email");
+			notificationsClass nC=new notificationsClass();
+			nC.showNotificaitonSomethingWrong();
 		}
 		return result;
 	}
@@ -245,7 +253,8 @@ public class DatabaseConnection {
 			prmt.close();
 			closeConnection();
 		} catch (ClassNotFoundException | SQLException ex) {
-			System.out.println("errort haya la check email");
+			notificationsClass nC=new notificationsClass();
+			nC.showNotificaitonSomethingWrong();
 			result ="";
 		}
 		return result;
@@ -268,7 +277,9 @@ public class DatabaseConnection {
 			prmt.close();
 			closeConnection();
 		} catch (ClassNotFoundException | SQLException ex) {
-			System.out.println("errort haya la check same old password with email");
+
+			notificationsClass nC=new notificationsClass();
+			nC.showNotificaitonSomethingWrong();
 			result =false;
 		}
 		return result;
@@ -284,7 +295,8 @@ public class DatabaseConnection {
 			prmt.close();
 			closeConnection();
 		} catch (ClassNotFoundException | SQLException ex) {
-			System.out.println("errort haya la set same old password with email");
+			notificationsClass nC=new notificationsClass();
+			nC.showNotificaitonSomethingWrong();
 		}
 	}
 
@@ -299,15 +311,52 @@ public class DatabaseConnection {
 			prmt.close();
 			closeConnection();
 		} catch (ClassNotFoundException | SQLException ex) {
-			System.out.println(ex);
-			System.out.println("errort haya la set same new email with username");
+			notificationsClass nC=new notificationsClass();
+			nC.showNotificaitonSomethingWrong();
 		}
 		
 	}
 
-	public void addBookInformationByUsername(String username, String bookName, String tempUrl, String description,
-			String language, String numberOfPage, String publisher, String reward, String year, File file) {
-		
+	public void addBookInformationByUsername(String tempUsername,String bookTitle,String description, String language,
+											 int numberOfPage,String publisher, String tempReward, int year,
+											 int editionNumber,String nameOfTranslator,
+											 String imageName, String fileName, String imageHTTP,
+											 String fileHTTP,int tempIndex,String timeAndDate,boolean isReviewed) {
+		try {
+			String query = "SELECT id FROM register WHERE username = ?";
+			PreparedStatement prmt = createConnection().prepareStatement(query);
+			prmt.setString(1, tempUsername);
+			ResultSet rs = prmt.executeQuery();
+			int user_id = 0;
+			while (rs.next()) {
+				user_id= rs.getInt("ID");
+			}
+			String insertBookQuery = "INSERT INTO user_book(user_id, book_title, description, language, " +
+					"number_of_page, publisher, temp_reward, year, edition_number, " +
+					"name_of_translator, image_name, file_name, image_http, file_http, " +
+					"temp_index, time_and_date,is_reviewed) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			prmt = createConnection().prepareStatement(insertBookQuery);
+			prmt.setInt(1, user_id);
+			prmt.setString(2, bookTitle);
+			prmt.setString(3, description);
+			prmt.setString(4, language);
+			prmt.setInt(5, numberOfPage);
+			prmt.setString(6, publisher);
+			prmt.setString(7, tempReward);
+			prmt.setInt(8, year);
+			prmt.setInt(9, editionNumber);
+			prmt.setString(10, nameOfTranslator);
+			prmt.setString(11, imageName);
+			prmt.setString(12, fileName);
+			prmt.setString(13, imageHTTP);
+			prmt.setString(14, fileHTTP);
+			prmt.setInt(15, tempIndex);
+			prmt.setString(16, timeAndDate);
+			prmt.setBoolean(17,isReviewed);
+			prmt.executeUpdate();
+		} catch (ClassNotFoundException | SQLException ex) {
+			notificationsClass nC=new notificationsClass();
+			nC.showNotificaitonEnterCorrectInromation();
+		}
 	}
-
 }

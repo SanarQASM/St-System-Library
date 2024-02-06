@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="318.0" prefWidth="255.0" styleClass="bothForm" stylesheets="@application.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.enterCodeController">
+<AnchorPane fx:id="enterCodeAnchor" prefHeight="318.0" prefWidth="255.0" styleClass="bothForm" stylesheets="@application.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.enterCodeController">
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="37.0" layoutY="5.0" prefHeight="26.0" prefWidth="165.0" style="-fx-border-color: #00b4d8;" styleClass="textLabel" stylesheets="@application.css" text="Enter Code" textAlignment="CENTER" textFill="#00b4d8">
          <font>
@@ -35,7 +35,7 @@
             <Font name="Times New Roman Bold" size="10.0" />
          </font>
       </Label>
-      <Button fx:id="enterCodeButton" alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="10.0" layoutX="34.0" layoutY="225.0" mnemonicParsing="false" onAction="#enterCodeButton" prefHeight="40.0" prefWidth="165.0" stylesheets="@application.css" text="Enter Your Code" textAlignment="CENTER" textFill="#fefee3">
+      <Button alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="10.0" layoutX="34.0" layoutY="225.0" mnemonicParsing="false" onAction="#enterCodeButton" prefHeight="40.0" prefWidth="165.0" stylesheets="@application.css" text="Enter Your Code" textAlignment="CENTER" textFill="#fefee3">
          <font>
             <Font name="Rockwell Condensed Bold" size="15.0" />
          </font>
@@ -75,7 +75,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <ImageView fitHeight="68.0" fitWidth="71.0" layoutX="87.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="enterCodeIcon" fitHeight="68.0" fitWidth="71.0" layoutX="87.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../image/emailSend.png" />
          </image>
@@ -100,7 +100,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Label fx:id="resendCodeAfter" layoutX="32.0" layoutY="160.0" text="resend code after: " textFill="#00b4d8">
+      <Label layoutX="32.0" layoutY="160.0" text="resend code after: " textFill="#00b4d8">
          <font>
             <Font name="Rockwell Bold" size="15.0" />
          </font>

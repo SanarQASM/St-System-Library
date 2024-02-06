@@ -1,4 +1,4 @@
-module StLibrary {
+module StLibrary{
     requires javafx.controls;
     requires javafx.fxml;
     requires transitive javafx.graphics;
@@ -11,6 +11,12 @@ module StLibrary {
     requires jakarta.activation;
 	requires java.prefs;
 	requires java.desktop;
+    requires firebase.admin;
+    requires com.google.auth;
+    requires com.google.auth.oauth2;
+    requires google.cloud.storage;
+    requires google.cloud.core;
+    requires mysql.connector.j;
     opens application to javafx.fxml;
     exports application;
 }
