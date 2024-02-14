@@ -69,6 +69,7 @@ public class enterCodeController implements Initializable {
 							return null;
 						}
 					};
+					System.out.println("the result is: "+result[0]);
 					new Thread(task).start();
 					task.setOnSucceeded(_ -> {
 						if (result[0]) {

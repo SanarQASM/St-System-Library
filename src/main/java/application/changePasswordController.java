@@ -64,7 +64,7 @@ public class changePasswordController {
 		if(accontCont!=null) {	
 			accountController aC=new accountController();
 			aC.showStage();
-			aC.setAllFormVisabiliity();
+			aC.setAllFormVisabiliityToBack();
 			accontCont=null;
 		}else {
 			settingController sC=new settingController();

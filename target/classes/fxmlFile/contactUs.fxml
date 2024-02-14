@@ -11,19 +11,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="355.0" prefWidth="519.0" styleClass="bothForm" stylesheets="@application.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.contactUsController">
+<AnchorPane fx:id="contactUsAnchor" prefHeight="297.0" prefWidth="656.0" styleClass="bothForm" stylesheets="@application.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.contactUsController">
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="184.0" layoutY="19.0" prefHeight="26.0" prefWidth="165.0" style="-fx-border-color: #00b4d8;" styleClass="textLabel" stylesheets="@application.css" text="Contact Us" textAlignment="CENTER" textFill="#00b4d8">
          <font>
             <Font name="Rockwell Condensed Bold" size="25.0" />
          </font>
       </Label>
-      <ImageView fitHeight="68.0" fitWidth="71.0" layoutX="54.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="contactUsImage" fitHeight="68.0" fitWidth="71.0" layoutX="54.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../image/contactUs.png" />
          </image>
       </ImageView>
-      <TextField fx:id="email" focusTraversable="false" layoutX="167.0" layoutY="70.0" prefHeight="35.0" prefWidth="200.0" promptText="Your Email" stylesheets="@application.css">
+      <TextField fx:id="email" focusTraversable="false" layoutX="167.0" layoutY="70.0" prefHeight="35.0" prefWidth="200.0" promptText="Your Account Email" stylesheets="@application.css">
          <font>
             <Font name="Bodoni MT" size="15.0" />
          </font>
@@ -41,7 +41,7 @@
             <Font name="Times New Roman Bold" size="10.0" />
          </font>
       </Label>
-      <Button alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="10.0" layoutX="360.0" layoutY="237.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="40.0" prefWidth="140.0" stylesheets="@application.css" text="Send Message" textAlignment="CENTER" textFill="#fefee3">
+      <Button alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="10.0" layoutX="422.0" layoutY="245.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="40.0" prefWidth="140.0" stylesheets="@application.css" text="Send Message" textAlignment="CENTER" textFill="#fefee3">
          <font>
             <Font name="Rockwell Condensed Bold" size="15.0" />
          </font>
@@ -61,7 +61,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button alignment="CENTER" graphicTextGap="10.0" layoutX="380.0" layoutY="293.0" mnemonicParsing="false" onAction="#backToLoginForm" prefHeight="40.0" prefWidth="100.0" stylesheets="@application.css" text="Back" textFill="#fefee3">
+      <Button alignment="CENTER" graphicTextGap="10.0" layoutX="442.0" layoutY="301.0" mnemonicParsing="false" onAction="#backTomainForm" prefHeight="40.0" prefWidth="100.0" stylesheets="@application.css" text="Back" textFill="#fefee3">
          <font>
             <Font name="Rockwell Condensed Bold" size="16.0" />
          </font>
@@ -81,7 +81,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <TextArea fx:id="message" layoutX="7.0" layoutY="125.0" prefHeight="222.0" prefWidth="336.0" promptText="Your Message" stylesheets="@application.css" wrapText="true">
+      <TextArea fx:id="message" layoutX="7.0" layoutY="149.0" prefHeight="198.0" prefWidth="336.0" promptText="Your Message" stylesheets="@application.css" wrapText="true">
          <styleClass>
             <String fx:value="enterInformation" />
             <String fx:value="transmate" />
@@ -96,7 +96,7 @@
             <Font name="Times New Roman Bold" size="10.0" />
          </font>
       </Label>
-      <ImageView fx:id="imageMessage" fitHeight="108.0" fitWidth="134.0" layoutX="376.0" layoutY="88.0" onMouseClicked="#openFilePeker" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="159.0" AnchorPane.leftAnchor="376.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="88.0">
+      <ImageView fx:id="imageMessage" fitHeight="108.0" fitWidth="134.0" layoutX="376.0" layoutY="107.0" onMouseClicked="#openFilePeker" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="376.0" AnchorPane.rightAnchor="172.0" AnchorPane.topAnchor="107.0">
          <image>
             <Image url="@../image/imageSelector.png" />
          </image>
@@ -104,10 +104,51 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <Label fx:id="imageError" layoutX="360.0" layoutY="196.0" prefHeight="15.0" prefWidth="140.0" textFill="RED">
+      <Label fx:id="imageError" alignment="CENTER" contentDisplay="CENTER" layoutX="440.0" layoutY="215.0" prefHeight="15.0" prefWidth="140.0" textAlignment="CENTER" textFill="RED">
          <font>
             <Font name="Times New Roman Bold" size="10.0" />
          </font>
       </Label>
+      <ImageView fx:id="fileMessage" fitHeight="99.0" fitWidth="99.0" layoutX="534.0" layoutY="107.0" onMouseClicked="#openFileDisplay" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/folders.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <Label alignment="CENTER" layoutX="406.0" layoutY="60.0" prefHeight="17.0" prefWidth="208.0" text="Select a file or Image" textAlignment="CENTER" textFill="#00b4d8">
+         <font>
+            <Font name="Rockwell Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="393.0" layoutY="92.0" prefHeight="17.0" prefWidth="91.0" text="Image" textAlignment="CENTER" textFill="#00b4d8">
+         <font>
+            <Font name="Rockwell" size="14.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="534.0" layoutY="92.0" prefHeight="17.0" prefWidth="91.0" text="File" textAlignment="CENTER" textFill="#00b4d8">
+         <font>
+            <Font name="Rockwell" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="12.0" layoutY="129.0" prefHeight="17.0" prefWidth="99.0" text="Allowed size: " textFill="#00b4d8">
+         <font>
+            <Font name="Rockwell Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="allowedSize" alignment="CENTER" contentDisplay="CENTER" layoutX="93.0" layoutY="129.0" prefHeight="17.0" prefWidth="99.0" text="0" textFill="RED">
+         <font>
+            <Font name="Rockwell Bold" size="12.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="delete" disable="true" fitHeight="35.0" fitWidth="33.0" layoutX="493.0" layoutY="178.0" onMouseClicked="#delete" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/delete.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
    </children>
 </AnchorPane>

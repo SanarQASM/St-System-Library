@@ -298,20 +298,18 @@ public class addBookInformation implements Initializable{
 
     }
     private void succussfullySend() {
-
         try {
             //upload to Storage
             firebase fb = new firebase();
             String imageHTTP = fb.uploadImageUrl(tempFileImage.getAbsolutePath(), STR."image/\{imageName}");
             String fileHTTP=fb.uploadFileUrl(tempFileFile.getAbsolutePath(), STR."file/\{fileName}");
-            //add to database
             mainController mC = new mainController();
             DatabaseConnection databaseCon = new DatabaseConnection();
             databaseCon.addBookInformationByUsername(mC.getTempUsername(),bookName.getText()
                     , Description.getText(), booklanguage.getText(), Integer.parseInt(numberOfPage.getText()),
                     publisher.getText(), tempReward, Integer.parseInt(year.getText()), Integer.parseInt(editionNumber.getText()),
                     NameofTheTranslator.getText(),imageName,fileName,
-                    imageHTTP,fileHTTP,tempIndex,timeAndDate.getText(),false);
+                    imageHTTP,fileHTTP,tempIndex,timeAndDate.getText(),false,"file","image");
             notificationsClass nC=new notificationsClass();
             nC.showNotificationSendToReview();
         }
@@ -336,7 +334,6 @@ public class addBookInformation implements Initializable{
                 bookUrl.setFitHeight(newHeight);
                 bookUrl.setImage(image);// bo naw bookimage day danein
                 imageName = file.getName();
-//            fb.deleteFile(STR."image/\{file.getName()}");
             }
         } catch (Exception e) {
             notificationsClass nC = new notificationsClass();
@@ -417,7 +414,7 @@ public class addBookInformation implements Initializable{
         Description.textProperty().addListener((observable, oldValue, newValue) -> {
             int characterCount = newValue.trim().length();
             allowedSize.setText(String.valueOf(characterCount));
-            if (characterCount >= 200) {
+            if (characterCount >= 200 || characterCount==0) {
                 allowedSize.setTextFill(Color.RED);
             } else {
                 allowedSize.setTextFill(Color.WHITE);

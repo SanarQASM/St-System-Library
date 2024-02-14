@@ -1,5 +1,7 @@
 package application;
 
+import com.mysql.cj.jdbc.exceptions.MysqlDataTruncation;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -321,7 +323,7 @@ public class DatabaseConnection {
 											 int numberOfPage,String publisher, String tempReward, int year,
 											 int editionNumber,String nameOfTranslator,
 											 String imageName, String fileName, String imageHTTP,
-											 String fileHTTP,int tempIndex,String timeAndDate,boolean isReviewed) {
+											 String fileHTTP,int tempIndex,String timeAndDate,boolean isReviewed,String prefixFile,String prefixImage) {
 		try {
 			String query = "SELECT id FROM register WHERE username = ?";
 			PreparedStatement prmt = createConnection().prepareStatement(query);
@@ -355,6 +357,29 @@ public class DatabaseConnection {
 			prmt.setBoolean(17,isReviewed);
 			prmt.executeUpdate();
 		} catch (ClassNotFoundException | SQLException ex) {
+			firebase fb=new firebase();
+			fb.deleteFile(STR."\{prefixFile}/\{fileName}");
+			fb.deleteFile(STR."\{prefixImage}/\{imageName}");
+			notificationsClass nC=new notificationsClass();
+			nC.showNotificaitonEnterCorrectInromation();
+		}
+	}
+
+	public void insertIntoContactUs(String email, String message, String fileOrImageName, String fileOrImageHTTP, boolean isAnswer,String prefixName) {
+		try {
+			String insertBookQuery = "INSERT INTO contact_us(email, descriptions,imageOrFileName,imageOrFilePath,isAnswer) VALUES (?, ?, ?, ?, ?)";
+			PreparedStatement prmt = createConnection().prepareStatement(insertBookQuery);
+			prmt.setString(1, email);
+			prmt.setString(2, message);
+			prmt.setString(3, fileOrImageName);
+			prmt.setString(4, fileOrImageHTTP);
+			prmt.setBoolean(5, isAnswer);
+			prmt.executeUpdate();
+			prmt.close();
+			closeConnection();
+		} catch (ClassNotFoundException | SQLException ex) {
+			firebase fb=new firebase();
+			fb.deleteFile(STR."\{prefixName}/\{fileOrImageName}");
 			notificationsClass nC=new notificationsClass();
 			nC.showNotificaitonEnterCorrectInromation();
 		}

@@ -38,10 +38,8 @@ public class accountController implements Initializable {
 	private boolean answer;
 	private boolean usernameSi;
 	private boolean passwordSi;
-	private boolean notHaveAccout = true;
-	private boolean questionFormat;
+    private boolean questionFormat;
 	private boolean answerForget;
-	private boolean usernameInFormatFound;
 	private boolean questionIndatabase;
 	private boolean answerIndatabse;
 	private static Stage tempStage;
@@ -280,7 +278,7 @@ public class accountController implements Initializable {
 				return null;
 			}
 		};
-		new Thread(task).start();
+
 		task.setOnSucceeded(_ -> {
 				if (usernameSi && passwordSi) {
 					try {
@@ -295,6 +293,7 @@ public class accountController implements Initializable {
 					}
 				}
 		});
+		new Thread(task).start();
 		Platform.runLater(() -> {
 			Image image=new Image(Objects.requireNonNull(getClass().getResource(
 					"/image/changeToLoading.gif")).toString());
@@ -385,7 +384,6 @@ public class accountController implements Initializable {
 		}
 	}
 
-
 	private void checkPasswordSi(){
 		if (!(si_passwordPass.isVisible())) {
 			si_passwordPass.setText(si_passwordText.getText());
@@ -431,7 +429,7 @@ public class accountController implements Initializable {
 				checkPassword();
 				checkComboBox();
 				checkAnswer();
-				notHaveAccout = true;
+				boolean notHaveAccout = true;
 				if (databaseCon.checkUsername(su_username.getText())) {
 					su_errorUserName.setText("Username Is Takin!!!");
 					notHaveAccout = false;
@@ -614,46 +612,62 @@ public class accountController implements Initializable {
 	}
 
 	@FXML
-	void proceed(ActionEvent event) throws IOException {
-		Task<Void> task = new Task<>() {
-			@Override
-			protected Void call() throws IOException {
-				forgetUsername.setText(forgetUsername.getText().trim());
-				if(forgetUsername.getText().length()>=20) {
-					forgetUsernameError.setText("Too Long!!!");
-					forgetUsername.setStyle("-fx-border-color: red;");
+	void proceed(ActionEvent event){
+		boolean result=false;
+		boolean usernameHave=false;
+		forgetUsername.setText(forgetUsername.getText().trim());
+		if(forgetUsername.getText().length()>=100) {
+			forgetUsernameError.setText("Too Long!!!");
+			forgetUsername.setStyle("-fx-border-color: red;");
+		}
+		else if (forgetUsername.getText().isEmpty()) {
+			forgetUsernameError.setText("Empty!");
+			forgetUsername.setStyle("-fx-border-color: red;");
+		}
+		else{
+			result= enterEmailController.isGmailAddress(forgetUsername.getText());
+			usernameHave=true;
+			forgetUsernameError.setText("");
+			forgetUsername.setStyle("-fx-border-color: #0077b6");
+		}
+		checkQuestionFormat();
+		checkAnswerFormat();
+		if (questionFormat && answerForget && usernameHave){
+			boolean finalResult = result;
+			Task<Void> task = new Task<>() {
+				@Override
+				protected Void call(){
+					if(finalResult){
+						checkForgetEmailIndatabase();
+					}else{
+						checkUsernameIndatabase();
+					}
+					return null;
 				}
-				forgetAnswer.setText(forgetAnswer.getText().trim());
-				if(forgetAnswer.getText().length()>=20) {
-					forgetAnswerError.setText("Too Long!!!");
-					forgetAnswer.setStyle("-fx-border-color: red;");
+			};
+			new Thread(task).start();
+			task.setOnSucceeded(_ -> {
+				stackPane.setDisable(false);
+				Image image = new Image(Objects.requireNonNull(getClass().getResource("/image/forgot-password.png")).toString());
+				forgetIcon.setImage(image);
+				if (questionIndatabase && answerIndatabse) {
+					Platform.runLater(() -> {
+						forgetPasswordForm.setVisible(false);
+						try {
+							openChangePasswordController(forgetUsername.getText());
+						} catch (IOException e) {
+							notificationsClass nC = new notificationsClass();
+							nC.showNotificaitonSomethingWrong();
+						}
+					});
 				}
-				checkUsernameToEmpty();
-				return null;
-			}
-		};
-		new Thread(task).start();
-		task.setOnSucceeded(_ -> {
-			if (questionIndatabase && answerIndatabse) {
-				forgetPasswordForm.setVisible(false);
-                try {
-					stackPane.setDisable(false);
-					Image image=new Image(Objects.requireNonNull(getClass().getResource(
-							"/image/forgot-password.png")).toString());
-					forgetIcon.setImage(image);
-                    openChangePasswordController(forgetUsername.getText());
-                } catch (IOException e) {
-                    notificationsClass nC=new notificationsClass();
-					nC.showNotificaitonSomethingWrong();
-                }
-            }
-		});
-		Platform.runLater(() -> {
-			Image image=new Image(Objects.requireNonNull(getClass().getResource(
-					"/image/changeToLoading.gif")).toString());
-			forgetIcon.setImage(image);
-			stackPane.setDisable(true);
-		});
+			});
+			Platform.runLater(() -> {
+				Image image = new Image(Objects.requireNonNull(getClass().getResource("/image/changeToLoading.gif")).toString());
+				forgetIcon.setImage(image);
+				stackPane.setDisable(true);
+			});
+		}
 
 	}
     public void openChangePasswordController(String wayToChange) throws IOException {
@@ -672,33 +686,24 @@ public class accountController implements Initializable {
 		cPC.setAccountController(accountController.aC);
 		stage.getIcons().add(image);
 		stage.show();
+		answerIndatabse=false;
+		questionIndatabase=false;
+		answerForget=false;
+		questionFormat=false;
 		stage.setOnCloseRequest(event -> {
 			event.consume();
 			Main main = new Main();
 			main.logout(stage);
 		});
     }
-	private void checkUsernameToEmpty() throws IOException {
-		if (forgetUsername.getText().isEmpty()) {
-			forgetUsernameError.setText("Empty!");
-			forgetUsername.setStyle("-fx-border-color: red;");
-		} else if(enterEmailController.isGmailAddress(forgetUsername.getText())){
-			checkForgetEmailIndatabase();
-		}else{
-			checkUsernameIndatabase();
-		}
-	}
 
 	private void checkForgetEmailIndatabase() {
-			DatabaseConnection databaseCon = new DatabaseConnection();
-			if (databaseCon.checkEmailInDatabase(forgetUsername.getText())) {
-				usernameInFormatFound = true;
+		DatabaseConnection databaseCon = new DatabaseConnection();
+		if (databaseCon.checkEmailInDatabase(forgetUsername.getText())) {
+			Platform.runLater(() -> {
 				forgetUsernameError.setText("");
-				checkQuestionFormat();
-				checkAnswerFormat();
 				if (answerForget && questionFormat) {
-					databaseCon.checkAnswerAndQuestion(databaseCon.getUsernameByEmail(forgetUsername.getText()), findIndexQuestoinFormat(),
-							forgetAnswer.getText());
+					databaseCon.checkAnswerAndQuestion(databaseCon.getUsernameByEmail(forgetUsername.getText()), findIndexQuestoinFormat(), forgetAnswer.getText());
 					if (databaseCon.getHaveQuestion()) {
 						forgetQuestionError.setText("");
 						questionIndatabase = true;
@@ -713,43 +718,47 @@ public class accountController implements Initializable {
 						forgetAnswerError.setText("Not Found!");
 					}
 				}
-			}
-			if (!usernameInFormatFound) {
+			});
+		} else {
+			Platform.runLater(() -> {
 				forgetUsernameError.setText("Not Found!");
-			}
+				forgetUsername.setStyle("-fx-border-color: #0077b6");
+			});
+		}
 	}
 
 	private void checkUsernameIndatabase(){
 		DatabaseConnection databaseCon = new DatabaseConnection();
 		if (databaseCon.checkUsername(forgetUsername.getText())) {
-			usernameInFormatFound = true;
-			forgetUsernameError.setText("");
-			checkQuestionFormat();
-			checkAnswerFormat();
-			if (answerForget && questionFormat) {
-				databaseCon.checkAnswerAndQuestion(forgetUsername.getText(), findIndexQuestoinFormat(),
-						forgetAnswer.getText());
-				if (databaseCon.getHaveQuestion()) {
-					forgetQuestionError.setText("");
-					questionIndatabase = true;
-				} else {
-					forgetQuestionError.setText("Not Found!");
+			Platform.runLater(() -> {
+				forgetUsernameError.setText("");
+				if (answerForget && questionFormat) {
+					databaseCon.checkAnswerAndQuestion(forgetUsername.getText(), findIndexQuestoinFormat(), forgetAnswer.getText());
+					if (databaseCon.getHaveQuestion()) {
+						forgetQuestionError.setText("");
+						questionIndatabase = true;
+					} else {
+						forgetQuestionError.setText("Not Found!");
+					}
+					if (databaseCon.getHaveAnswer()) {
+						forgetAnswerError.setText("");
+						forgetAnswer.setStyle("-fx-border-color: #0077b6;");
+						answerIndatabse = true;
+					} else {
+						forgetAnswerError.setText("Not Found!");
+					}
 				}
-				if (databaseCon.getHaveAnswer()) {
-					forgetAnswerError.setText("");
-					forgetAnswer.setStyle("-fx-border-color: #0077b6;");
-					answerIndatabse = true;
-				} else {
-					forgetAnswerError.setText("Not Found!");
-				}
-			}
-		}
-		if (!usernameInFormatFound) {
-			forgetUsernameError.setText("Not Found!");
+			});
+		} else {
+			Platform.runLater(() -> {
+				forgetUsernameError.setText("Not Found!");
+				forgetUsername.setStyle("-fx-border-color: #0077b6");
+			});
 		}
 	}
 
 	private void checkAnswerFormat() {
+		forgetAnswer.setText(forgetAnswer.getText().trim());
 		if (forgetAnswer.getText().isEmpty()) {
 			forgetAnswerError.setText("Answer!");
 		}else if (forgetAnswer.getText().length()>=15) {
@@ -842,6 +851,7 @@ public class accountController implements Initializable {
 		aUC.setStgae(stage);
 		tempStage.close();
 		stage.show();
+		stage.setResizable(false);
 		stage.setOnCloseRequest(event1 -> {
 			event1.consume();
 			Main main = new Main();
@@ -853,5 +863,10 @@ public class accountController implements Initializable {
 		aC.loginForm.setVisible(true);
 		aC.forgetPasswordWayForm.setVisible(false);
 		aC.forgetPasswordForm.setVisible(false);
+	}
+	public void setAllFormVisabiliityToBack() {
+		aC.loginForm.setVisible(false);
+		aC.forgetPasswordWayForm.setVisible(false);
+		aC.forgetPasswordForm.setVisible(true);
 	}
 }

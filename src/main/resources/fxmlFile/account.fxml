@@ -44,7 +44,7 @@
                         <Image url="@../image/login.png" />
                      </image>
                   </ImageView>
-                  <Hyperlink focusTraversable="false" layoutX="163.0" layoutY="329.0" onAction="#forgetPassword" prefHeight="23.0" prefWidth="113.0" style="-fx-text-fill: #00b4d8;" styleClass="forgetPasswordHyperlink" stylesheets="@application.css" text="Forget Password" textFill="#00b4d8" underline="true">
+                  <Hyperlink focusTraversable="false" layoutX="163.0" layoutY="339.0" onAction="#forgetPassword" prefHeight="23.0" prefWidth="113.0" style="-fx-text-fill: #00b4d8;" styleClass="forgetPasswordHyperlink" stylesheets="@application.css" text="Forget Password" textFill="#00b4d8" underline="true">
                      <font>
                         <Font name="Perpetua Bold Italic" size="14.0" />
                      </font>
