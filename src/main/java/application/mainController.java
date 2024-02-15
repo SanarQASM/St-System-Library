@@ -51,6 +51,9 @@ public class mainController implements Initializable {
 	private Label countBook;
 
 	@FXML
+	private Label reviewedBooks;
+
+	@FXML
 	private HBox favoritesTab;
 
 	@FXML
@@ -114,13 +117,11 @@ public class mainController implements Initializable {
 	private GridPane yourTobBookGridPane;
 
 	private static int count = 0;
-	public static int countToSetId = 1;
 	private static List<HBox> listOfHbox = new ArrayList<>();
 	public static List<VBox> listOfVbox = new ArrayList<>();
 	private static List<Character> lastDigit = new ArrayList<>();
 	private static String tempUsernameAccount;
-	private static int index = 1;
-	private static Stage tempStage;	
+	private static Stage tempStage;
 	
 	public mainController(String text) {
 		tempUsernameAccount = text;
@@ -140,7 +141,7 @@ public class mainController implements Initializable {
 		List<HBox> listOfHboxSearch = new ArrayList<>();
 		listOfHboxSearch.clear();
 
-		if (!(searchText.getText().equals("")) && bookController.nameMap.size() != 0) {
+		if (!(searchText.getText().isEmpty()) && !bookController.nameMap.isEmpty()) {
 			getAllLabelName();
 			for (HBox eachHbox : listOfHbox) {
 				for (char eachChar : lastDigit) {
@@ -149,14 +150,14 @@ public class mainController implements Initializable {
 					}
 				}
 			}
-			if (listOfHboxSearch.size() == 0) {
+			if (listOfHboxSearch.isEmpty()) {
 				resultSearch.setText("Nothing Found!!!");
 			} else {
-				resultSearch.setText(listOfHboxSearch.size() + " Result Found.");
+				resultSearch.setText(STR."\{listOfHboxSearch.size()} Result Found.");
 			}
 			hBoxScrollPane.getChildren().clear();
 			hBoxScrollPane.getChildren().setAll(listOfHboxSearch);
-		} else if (!(searchText.getText().equals("")) || searchText.getText().equals("")) {
+		} else if (!(searchText.getText().isEmpty()) || searchText.getText().isEmpty()) {
 			resultSearch.setText("Nothing Found, Add Book.");
 			resultSearch.setScaleY(1.1);
 			resultSearch.setScaleX(1.1);
@@ -181,16 +182,6 @@ public class mainController implements Initializable {
 	public void addBookButton(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFile/addNewBook.fxml"));
 		Parent root = loader.load();
-//		HBox hbox = loader.load();// loady main hbox dakat
-//		count++;// bo zanini zhmaray ktab
-//		countBook.setText("Last add is: " + count);// agar ktab zyad bkre label dagore
-//		String countId = "Hbox" + index;// lera String bo id nwe drust dakain
-//		hbox.setId(countId);// bo har hboxek id nwe daxl akain
-//		listOfHbox.add(hbox);// listek la hbox drust dakain bo away la regay aw lista hbox zyad bkain bo hbox
-//								// scroll
-//		addAndGenerateIdForHbox();// danani id bo har hboxek wa zyad krdni bo scroll pane
-//		addRecommand(index);// pash drust krdni vboxeki tr drust akain bo recommend book
-//		index++;
 		Scene scene = new Scene(root);
 		Stage stage = new Stage();
 		scene.getStylesheets().add(getClass().getResource("/fxmlFile/application.css").toExternalForm());
@@ -202,6 +193,7 @@ public class mainController implements Initializable {
 		tempStage.hide();
 		stage.getIcons().add(image);
 		stage.show();
+		stage.setResizable(false);
 		stage.setOnCloseRequest(event1 -> {
 			event1.consume();
 			Main main = new Main();
@@ -320,11 +312,14 @@ public class mainController implements Initializable {
 			eachHbox.setStyle("-fx-background-color: transparent;" + "-fx-opacity: 1;");
 		}
 		uploadedTab.setStyle("-fx-background-color: #18f08a;" + "-fx-opacity:0.7;");
+		updateReviewedBooks();
+		updateMainFrame();
 	}
 
 	@FXML
 	void referesh(MouseEvent event) {
 		usernameLabel.setText(tempUsernameAccount);
+		updateReviewedBooks();
 	}
 
 	@FXML
@@ -423,5 +418,20 @@ public class mainController implements Initializable {
 	}         
 	public void showStage() {
 		tempStage.show();
+	}
+
+	public void updateMainFrame() {
+		DatabaseConnection databaseCon=new DatabaseConnection();
+		int result=databaseCon.getNumberOfBook(tempUsernameAccount);
+		if (!(result==0)){
+			countBook.setText(STR."Last add is: \{result}");
+		}
+		else{
+			countBook.setText("No Books");
+		}
+	}
+	private void updateReviewedBooks() {
+		DatabaseConnection databaseCon=new DatabaseConnection();
+		reviewedBooks.setText(STR."Reviewed books: \{databaseCon.getNumberOfReviewedBooks(tempUsernameAccount)}");
 	}
 }

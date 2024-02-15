@@ -531,7 +531,7 @@
                                     <HBox alignment="CENTER" prefHeight="38.0" prefWidth="774.0">
                                        <children>
                                           <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                                          <Label fx:id="countBook" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="630.0" text="No Book " textAlignment="CENTER" textFill="#18f08a">
+                                          <Label fx:id="countBook" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="630.0" text="No Books" textAlignment="CENTER" textFill="#18f08a">
                                              <font>
                                                 <Font name="Rockwell Bold" size="20.0" />
                                              </font>
@@ -553,7 +553,17 @@
                                     </ScrollPane>
                                     <HBox alignment="TOP_CENTER" prefHeight="54.0" prefWidth="763.0">
                                        <children>
-                                          <Pane prefWidth="60.0" HBox.hgrow="ALWAYS" />
+                                          <Pane prefWidth="60.0" HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <Label fx:id="reviewedBooks" alignment="CENTER" contentDisplay="CENTER" layoutX="2.0" layoutY="3.0" prefHeight="39.0" prefWidth="291.0" text="Reviewed books" textAlignment="CENTER" textFill="#18f08a">
+                                                   <font>
+                                                      <Font name="Rockwell" size="24.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                </Label>
+                                             </children></Pane>
                                           <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#addBookButton" prefWidth="146.0" styleClass="createShelves_Button" stylesheets="@application.css" text="Add  Book" textAlignment="CENTER" textFill="WHITE">
                                              <cursor>
                                                 <Cursor fx:constant="HAND" />

@@ -104,9 +104,9 @@ public class addBookInformation implements Initializable{
         boolean yearPublicationBook = checkYear();
         boolean filePath = checkFileUrl();
         boolean imageBook = checkImageBook();
-        boolean editionNum=checkEditionNumber();
-        boolean nameofTranslator=checkNameTranslator();
-        boolean cate=checkCategories();
+        boolean editionNum = checkEditionNumber();
+        boolean nameofTranslator = checkNameTranslator();
+        boolean cate = checkCategories();
         if (descriptionBook && bookName && languageBook && numberPageBook &&
                 publisherBook && yearPublicationBook && editionNum && nameofTranslator && cate && filePath && imageBook) {
             Task<Void> task = new Task<>() {
@@ -118,24 +118,31 @@ public class addBookInformation implements Initializable{
             };
 
             task.setOnSucceeded(_ -> {
-                notificationsClass nC = new notificationsClass();
-                nC.showNotificationSendToReview();
-                loadingFram.setVisible(false);
-                enterEnformationForm.setVisible(true);
-                backToMainStage();
+                Platform.runLater(() -> {
+                    notificationsClass nC = new notificationsClass();
+                    nC.showNotificationSendToReview();
+                    loadingFram.setVisible(false);
+                    enterEnformationForm.setVisible(true);
+                    backToMainStage();
+                    mainController mC = new mainController();
+                    mC.updateMainFrame();
+                });
             });
             new Thread(task).start();
             Platform.runLater(() -> {
                 stackPane.setDisable(true);
                 enterEnformationForm.setVisible(false);
-                Image image=new Image(Objects.requireNonNull(getClass().getResource("/image/loading.gif")).toString());
+                Image image = new Image(Objects.requireNonNull(getClass().getResource("/image/loading.gif")).toString());
                 loadingImage.setImage(image);
                 loadingFram.setVisible(true);
             });
         } else {
-            notificationsClass nC = new notificationsClass();
-            nC.showNotificationFieldEmpty();
+            Platform.runLater(() -> {
+                notificationsClass nC = new notificationsClass();
+                nC.showNotificationFieldEmpty();
+            });
         }
+
     }
 
     private boolean checkCategories() {
@@ -310,8 +317,6 @@ public class addBookInformation implements Initializable{
                     publisher.getText(), tempReward, Integer.parseInt(year.getText()), Integer.parseInt(editionNumber.getText()),
                     NameofTheTranslator.getText(),imageName,fileName,
                     imageHTTP,fileHTTP,tempIndex,timeAndDate.getText(),false,"file","image");
-            notificationsClass nC=new notificationsClass();
-            nC.showNotificationSendToReview();
         }
         catch (Exception e){
             notificationsClass nC=new notificationsClass();

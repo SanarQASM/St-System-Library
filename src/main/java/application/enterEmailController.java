@@ -49,7 +49,7 @@ public class enterEmailController {
 	@FXML
 	void findEmail(ActionEvent event) {
 
-				if (email.getText().length()>=45) {
+				if (email.getText().length()>=99) {
 					errorEmail.setText("Too Long!!!");
 					email.setStyle("-fx-border-color: red;");
 				}
@@ -63,10 +63,8 @@ public class enterEmailController {
 									Task<Void> task = new Task<>() {
 										@Override
 										protected Void call(){
-
 											emailSender eSender = new emailSender();
 											result[0] =eSender.startSendMail(emailText);
-
 											return null;
 										}
 									};

@@ -1,7 +1,5 @@
 package application;
 
-import com.mysql.cj.jdbc.exceptions.MysqlDataTruncation;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -47,13 +45,13 @@ public class DatabaseConnection {
 			closeConnection();
 
 		} catch (ClassNotFoundException | SQLException ex) {
-			notificationsClass nC=new notificationsClass();
+			notificationsClass nC = new notificationsClass();
 			nC.showNotificaitonSomethingWrong();
 		}
 		return result;
 	}
 
-	public boolean checkPasswordThrougUsername(String username,String password) {
+	public boolean checkPasswordThrougUsername(String username, String password) {
 		boolean result = false;
 		try {
 			String query = "SELECT password FROM register WHERE username=?;";
@@ -71,12 +69,13 @@ public class DatabaseConnection {
 			closeConnection();
 
 		} catch (ClassNotFoundException | SQLException ex) {
-			notificationsClass nC=new notificationsClass();
+			notificationsClass nC = new notificationsClass();
 			nC.showNotificaitonSomethingWrong();
 		}
 		return result;
 	}
-	public boolean checkPasswordThrougEmail(String email,String password) {
+
+	public boolean checkPasswordThrougEmail(String email, String password) {
 		boolean result = false;
 		try {
 			String query = "SELECT password FROM register WHERE email=?;";
@@ -94,12 +93,13 @@ public class DatabaseConnection {
 			closeConnection();
 
 		} catch (ClassNotFoundException | SQLException ex) {
-			notificationsClass nC=new notificationsClass();
+			notificationsClass nC = new notificationsClass();
 			nC.showNotificaitonSomethingWrong();
 		}
 		return result;
 	}
-	public void setAllInformationIndatabase(String username, String password, String email, int question_index,String answer) {
+
+	public void setAllInformationIndatabase(String username, String password, String email, int question_index, String answer) {
 		try {
 			String query = "INSERT INTO register(username,password,email,question_index,answer) VALUES (?,?,?,?,?);";
 			PreparedStatement prmt = createConnection().prepareStatement(query);
@@ -107,12 +107,12 @@ public class DatabaseConnection {
 			prmt.setString(2, password);
 			prmt.setString(3, email);
 			prmt.setInt(4, question_index);
-			prmt.setString(5,answer);
+			prmt.setString(5, answer);
 			prmt.executeUpdate();
 			prmt.close();
 			closeConnection();
 		} catch (ClassNotFoundException | SQLException ex) {
-			notificationsClass nC=new notificationsClass();
+			notificationsClass nC = new notificationsClass();
 			nC.showNotificaitonSomethingWrong();
 		}
 	}
@@ -137,7 +137,7 @@ public class DatabaseConnection {
 			prmt.close();
 			closeConnection();
 		} catch (ClassNotFoundException | SQLException ex) {
-			notificationsClass nC=new notificationsClass();
+			notificationsClass nC = new notificationsClass();
 			nC.showNotificaitonSomethingWrong();
 		}
 	}
@@ -159,7 +159,7 @@ public class DatabaseConnection {
 			prmt.close();
 			closeConnection();
 		} catch (ClassNotFoundException | SQLException ex) {
-			notificationsClass nC=new notificationsClass();
+			notificationsClass nC = new notificationsClass();
 			nC.showNotificaitonSomethingWrong();
 		}
 		return samePassword;
@@ -175,7 +175,7 @@ public class DatabaseConnection {
 			prmt.close();
 			closeConnection();
 		} catch (ClassNotFoundException | SQLException ex) {
-			notificationsClass nC=new notificationsClass();
+			notificationsClass nC = new notificationsClass();
 			nC.showNotificaitonSomethingWrong();
 		}
 	}
@@ -197,7 +197,7 @@ public class DatabaseConnection {
 			prmt.close();
 			closeConnection();
 		} catch (ClassNotFoundException | SQLException ex) {
-			notificationsClass nC=new notificationsClass();
+			notificationsClass nC = new notificationsClass();
 			nC.showNotificaitonSomethingWrong();
 		}
 		return result;
@@ -213,7 +213,7 @@ public class DatabaseConnection {
 			prmt.close();
 			closeConnection();
 		} catch (ClassNotFoundException | SQLException ex) {
-			notificationsClass nC=new notificationsClass();
+			notificationsClass nC = new notificationsClass();
 			nC.showNotificaitonSomethingWrong();
 		}
 	}
@@ -235,14 +235,14 @@ public class DatabaseConnection {
 			prmt.close();
 			closeConnection();
 		} catch (ClassNotFoundException | SQLException ex) {
-			notificationsClass nC=new notificationsClass();
+			notificationsClass nC = new notificationsClass();
 			nC.showNotificaitonSomethingWrong();
 		}
 		return result;
 	}
 
 	public String getUsernameByEmail(String email) {
-		String result="";
+		String result = "";
 		try {
 			String query = "SELECT username FROM register WHERE email=?;";
 			PreparedStatement prmt = createConnection().prepareStatement(query);
@@ -255,15 +255,15 @@ public class DatabaseConnection {
 			prmt.close();
 			closeConnection();
 		} catch (ClassNotFoundException | SQLException ex) {
-			notificationsClass nC=new notificationsClass();
+			notificationsClass nC = new notificationsClass();
 			nC.showNotificaitonSomethingWrong();
-			result ="";
+			result = "";
 		}
 		return result;
 	}
 
 	public boolean checkToSameOldPassWithEmail(String email, String password) {
-		boolean result =false;
+		boolean result = false;
 		try {
 			String query = "SELECT password FROM register WHERE email = ?;";
 			PreparedStatement prmt = createConnection().prepareStatement(query);
@@ -272,7 +272,7 @@ public class DatabaseConnection {
 			while (rs.next()) {
 				String passwordIndatabase = rs.getString("password");
 				if (passwordIndatabase.equals(password)) {
-					result=true;
+					result = true;
 				}
 			}
 			rs.close();
@@ -280,9 +280,9 @@ public class DatabaseConnection {
 			closeConnection();
 		} catch (ClassNotFoundException | SQLException ex) {
 
-			notificationsClass nC=new notificationsClass();
+			notificationsClass nC = new notificationsClass();
 			nC.showNotificaitonSomethingWrong();
-			result =false;
+			result = false;
 		}
 		return result;
 	}
@@ -297,7 +297,7 @@ public class DatabaseConnection {
 			prmt.close();
 			closeConnection();
 		} catch (ClassNotFoundException | SQLException ex) {
-			notificationsClass nC=new notificationsClass();
+			notificationsClass nC = new notificationsClass();
 			nC.showNotificaitonSomethingWrong();
 		}
 	}
@@ -306,24 +306,24 @@ public class DatabaseConnection {
 		try {
 			String query = "UPDATE register SET email = ? WHERE username = ?";
 
-            PreparedStatement prmt = createConnection().prepareStatement(query);
-                prmt.setString(1, oldEmail);
-                prmt.setString(2, username);
-            prmt.executeUpdate();
+			PreparedStatement prmt = createConnection().prepareStatement(query);
+			prmt.setString(1, oldEmail);
+			prmt.setString(2, username);
+			prmt.executeUpdate();
 			prmt.close();
 			closeConnection();
 		} catch (ClassNotFoundException | SQLException ex) {
-			notificationsClass nC=new notificationsClass();
+			notificationsClass nC = new notificationsClass();
 			nC.showNotificaitonSomethingWrong();
 		}
-		
+
 	}
 
-	public void addBookInformationByUsername(String tempUsername,String bookTitle,String description, String language,
-											 int numberOfPage,String publisher, String tempReward, int year,
-											 int editionNumber,String nameOfTranslator,
+	public void addBookInformationByUsername(String tempUsername, String bookTitle, String description, String language,
+											 int numberOfPage, String publisher, String tempReward, int year,
+											 int editionNumber, String nameOfTranslator,
 											 String imageName, String fileName, String imageHTTP,
-											 String fileHTTP,int tempIndex,String timeAndDate,boolean isReviewed,String prefixFile,String prefixImage) {
+											 String fileHTTP, int tempIndex, String timeAndDate, boolean isReviewed, String prefixFile, String prefixImage) {
 		try {
 			String query = "SELECT id FROM register WHERE username = ?";
 			PreparedStatement prmt = createConnection().prepareStatement(query);
@@ -331,7 +331,7 @@ public class DatabaseConnection {
 			ResultSet rs = prmt.executeQuery();
 			int user_id = 0;
 			while (rs.next()) {
-				user_id= rs.getInt("ID");
+				user_id = rs.getInt("ID");
 			}
 			String insertBookQuery = "INSERT INTO user_book(user_id, book_title, description, language, " +
 					"number_of_page, publisher, temp_reward, year, edition_number, " +
@@ -354,18 +354,18 @@ public class DatabaseConnection {
 			prmt.setString(14, fileHTTP);
 			prmt.setInt(15, tempIndex);
 			prmt.setString(16, timeAndDate);
-			prmt.setBoolean(17,isReviewed);
+			prmt.setBoolean(17, isReviewed);
 			prmt.executeUpdate();
 		} catch (ClassNotFoundException | SQLException ex) {
-			firebase fb=new firebase();
+			firebase fb = new firebase();
 			fb.deleteFile(STR."\{prefixFile}/\{fileName}");
 			fb.deleteFile(STR."\{prefixImage}/\{imageName}");
-			notificationsClass nC=new notificationsClass();
+			notificationsClass nC = new notificationsClass();
 			nC.showNotificaitonEnterCorrectInromation();
 		}
 	}
 
-	public void insertIntoContactUs(String email, String message, String fileOrImageName, String fileOrImageHTTP, boolean isAnswer,String prefixName) {
+	public void insertIntoContactUs(String email, String message, String fileOrImageName, String fileOrImageHTTP, boolean isAnswer, String prefixName) {
 		try {
 			String insertBookQuery = "INSERT INTO contact_us(email, descriptions,imageOrFileName,imageOrFilePath,isAnswer) VALUES (?, ?, ?, ?, ?)";
 			PreparedStatement prmt = createConnection().prepareStatement(insertBookQuery);
@@ -378,10 +378,71 @@ public class DatabaseConnection {
 			prmt.close();
 			closeConnection();
 		} catch (ClassNotFoundException | SQLException ex) {
-			firebase fb=new firebase();
+			firebase fb = new firebase();
 			fb.deleteFile(STR."\{prefixName}/\{fileOrImageName}");
-			notificationsClass nC=new notificationsClass();
+			notificationsClass nC = new notificationsClass();
 			nC.showNotificaitonEnterCorrectInromation();
 		}
+	}
+
+	public int getNumberOfBook(String username) {
+		int result=0;
+		try {
+			String queryGetId = "SELECT ID FROM register WHERE username = ?";
+			PreparedStatement prmt = createConnection().prepareStatement(queryGetId);
+			prmt.setString(1, username);
+			ResultSet resultSet = prmt.executeQuery();
+			int userId = -1; // Default value or handle if not found
+			if (resultSet.next()) {
+				userId = resultSet.getInt("ID");
+			}
+			String query = "SELECT COUNT(*) as book_count FROM user_book WHERE user_id = ?;";
+
+			prmt = createConnection().prepareStatement(query);
+			prmt.setInt(1,userId);
+			ResultSet rs = prmt.executeQuery();
+			while (rs.next()) {
+				result = rs.getInt("book_count");
+			}
+			rs.close();
+			prmt.close();
+			closeConnection();
+		} catch (ClassNotFoundException | SQLException ex) {
+			ex.printStackTrace();
+			notificationsClass nC = new notificationsClass();
+			nC.showNotificaitonSomethingWrong();
+			result = -1;
+		}
+		return result;
+	}
+
+	public int getNumberOfReviewedBooks(String username) {
+		int result=0;
+		try {
+			String queryGetId = "SELECT ID FROM register WHERE username = ?";
+			PreparedStatement prmt = createConnection().prepareStatement(queryGetId);
+			prmt.setString(1, username);
+			ResultSet resultSet = prmt.executeQuery();
+			int userId = -1; // Default value or handle if not found
+			if (resultSet.next()) {
+				userId = resultSet.getInt("ID");
+			}
+			String query = "SELECT COUNT(*) as book_reviewed FROM user_book WHERE is_reviewed=1 AND user_id=?;";
+			prmt = createConnection().prepareStatement(query);
+			prmt.setInt(1,userId);
+			ResultSet rs = prmt.executeQuery();
+			while (rs.next()) {
+				result= rs.getInt("book_reviewed");
+			}
+			rs.close();
+			prmt.close();
+			closeConnection();
+		} catch (ClassNotFoundException | SQLException ex) {
+			ex.printStackTrace();
+			notificationsClass nC = new notificationsClass();
+			nC.showNotificaitonSomethingWrong();
+			result = -1;
+		}
+		return result;
 	}
 }

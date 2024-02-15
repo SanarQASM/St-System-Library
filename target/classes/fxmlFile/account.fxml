@@ -131,7 +131,7 @@
                         <String fx:value="textInformation" />
                      </styleClass>
                   </TextField>
-                  <ImageView fitHeight="81.0" fitWidth="77.0" layoutX="107.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="registerIcon" fitHeight="81.0" fitWidth="77.0" layoutX="107.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../image/register.png" />
                      </image>

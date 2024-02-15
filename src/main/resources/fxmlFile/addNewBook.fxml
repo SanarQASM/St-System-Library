@@ -377,9 +377,12 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="loadingFram" prefHeight="700.0" prefWidth="700.0" styleClass="hboxAddBook" stylesheets="@application.css" visible="false">
+      <AnchorPane fx:id="loadingFram" prefHeight="700.0" prefWidth="700.0" style="-fx-background-color: black;" stylesheets="@application.css" visible="false">
          <children>
-            <ImageView fx:id="loadingImage" fitHeight="408.0" fitWidth="450.0" layoutX="131.0" layoutY="146.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="146.0" AnchorPane.leftAnchor="131.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="146.0" />
+            <ImageView fx:id="loadingImage" fitHeight="517.0" fitWidth="642.0" layoutX="28.0" layoutY="146.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="37.0" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="146.0">
+               <image>
+                  <Image url="@../image/loading.gif" />
+               </image></ImageView>
             <Label layoutX="178.0" layoutY="63.0" text="Please wait for shipping" textFill="WHITE">
                <font>
                   <Font name="Rockwell Bold" size="30.0" />
