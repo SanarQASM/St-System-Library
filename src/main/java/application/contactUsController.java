@@ -29,6 +29,7 @@ public class contactUsController implements Initializable {
 	private static File tempFileImage;
 	private static String imageName;
 	private static String tempResult;
+	private static notificationsClass nC;
 
 	@FXML
 	private ImageView delete;
@@ -63,6 +64,11 @@ public class contactUsController implements Initializable {
 	@FXML
 	private Label messageError;
 
+	public contactUsController(){}
+	public contactUsController(notificationsClass nC){
+		contactUsController.nC=nC;
+	}
+
     public void setStgae(Stage tempStage) {
     	contactUsController.tempStage=tempStage;
     }
@@ -70,11 +76,11 @@ public class contactUsController implements Initializable {
     void backTomainForm(ActionEvent event) {
     	mainForm();
     }
-private void mainForm(){
-	tempStage.close();
-	accountController aC=new accountController();
-	aC.showStage();
-}
+	private void mainForm(){
+		tempStage.close();
+		accountController aC=new accountController();
+		aC.showStage();
+	}
     @FXML
     void sendMessage(ActionEvent event) {
 		boolean emailIsOk = checkEmail();
@@ -83,17 +89,20 @@ private void mainForm(){
 		if (emailIsOk && messageIsOk && imageIsOk) {
 			Task<Void> sendEmailTask = new Task<>() {
 				@Override
-				protected Void call() {
+				protected Void call() throws Exception {
 					String imageHTTP;
 					String fileHTTP;
 					firebase fb = new firebase();
 					if (tempResult.equals("Image")) {
 						imageHTTP = fb.uploadImageUrl(tempFileImage.getAbsolutePath(), STR."image_Contact/\{imageName}");
-						DatabaseConnection databaseCon = new DatabaseConnection();
+						DatabaseConnection databaseCon = new DatabaseConnection(nC);
 						databaseCon.insertIntoContactUs(email.getText(), message.getText(), imageName, imageHTTP, false,"image_Contact");
 					} else if (tempResult.equals("File")) {
 						fileHTTP = fb.uploadFileUrl(tempFileFile.getAbsolutePath(), STR."file_Contact/\{fileName}");
-						DatabaseConnection databaseCon = new DatabaseConnection();
+						if (Objects.equals(fileHTTP, "0")){
+							throw new Exception("check the Internet");
+						}
+						DatabaseConnection databaseCon = new DatabaseConnection(nC);
 						databaseCon.insertIntoContactUs(email.getText(), message.getText(), fileName, fileHTTP, false,"file_Contact");
 					}
 					return null;
@@ -102,7 +111,6 @@ private void mainForm(){
 
 			sendEmailTask.setOnSucceeded(e -> {
 				Platform.runLater(() -> {
-					notificationsClass nC = new notificationsClass();
 					nC.showNotificaitonReplayYourEmail();
 					Image image = new Image(Objects.requireNonNull(getClass().getResource("/image/contactUs.png")).toString());
 					contactUsImage.setImage(image);
@@ -113,8 +121,7 @@ private void mainForm(){
 
 			sendEmailTask.setOnFailed(e -> {
 				Platform.runLater(() -> {
-					notificationsClass nC = new notificationsClass();
-					nC.showNotificaitonSomethingWrong();
+					nC.showNotificaitonSomethingWrong("failed to send Message");
 					contactUsAnchor.setDisable(false);
 					Image image = new Image(Objects.requireNonNull(getClass().getResource("/image/contactUs.png")).toString());
 					contactUsImage.setImage(image);
@@ -243,7 +250,6 @@ private void mainForm(){
 				delete.setDisable(false);
 			}
 		} catch (Exception e) {
-			notificationsClass nC = new notificationsClass();
 			nC.showNotificationInvalideType();
 		}
 	}

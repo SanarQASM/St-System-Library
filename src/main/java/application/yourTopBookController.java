@@ -29,33 +29,33 @@ public class yourTopBookController implements Initializable {
 	}
 
 	public yourTopBookController(Integer digit) {
-		Iterator<String> iterator = bookController.imageURLMap.keySet().iterator();
-		while (iterator.hasNext()) {
-			String key = iterator.next();
-			int last = Character.getNumericValue(key.charAt(key.length() - 1));
-			if (last == digit) {
-				String imageURL = bookController.imageURLMap.get(key);
-				image = new Image(imageURL);
-			}
-		}
-		Iterator<String> iterator2 = bookController.nameMap.keySet().iterator();
-		while (iterator2.hasNext()) {
-			String key = iterator2.next();
-			int last = Character.getNumericValue(key.charAt(key.length() - 1));
-			if (last == digit) {
-				String nameOfBook = bookController.nameMap.get(key);
-				bookName = nameOfBook;
-			}
-		}
-		Iterator<String> iterator3 = bookController.categoriesMap.keySet().iterator();
-		while (iterator3.hasNext()) {
-			String key = iterator3.next();
-			int last = Character.getNumericValue(key.charAt(key.length() - 1));
-			if (last == digit) {
-				String categories = bookController.categoriesMap.get(key);
-				categoriesName = categories;
-			}
-		}
+//		Iterator<String> iterator = bookController.imageURLMap.keySet().iterator();
+//		while (iterator.hasNext()) {
+//			String key = iterator.next();
+//			int last = Character.getNumericValue(key.charAt(key.length() - 1));
+//			if (last == digit) {
+//				String imageURL = bookController.imageURLMap.get(key);
+//				image = new Image(imageURL);
+//			}
+//		}
+//		Iterator<String> iterator2 = bookController.nameMap.keySet().iterator();
+//		while (iterator2.hasNext()) {
+//			String key = iterator2.next();
+//			int last = Character.getNumericValue(key.charAt(key.length() - 1));
+//			if (last == digit) {
+//				String nameOfBook = bookController.nameMap.get(key);
+//				bookName = nameOfBook;
+//			}
+//		}
+//		Iterator<String> iterator3 = bookController.categoriesMap.keySet().iterator();
+//		while (iterator3.hasNext()) {
+//			String key = iterator3.next();
+//			int last = Character.getNumericValue(key.charAt(key.length() - 1));
+//			if (last == digit) {
+//				String categories = bookController.categoriesMap.get(key);
+//				categoriesName = categories;
+//			}
+//		}
 	}
 
 	@Override

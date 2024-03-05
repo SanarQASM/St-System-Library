@@ -9,10 +9,10 @@ import javafx.util.Duration;
 import java.util.Objects;
 
 public class notificationsClass {
-	public void showNotificaitonSomethingWrong() {
+	public void showNotificaitonSomethingWrong(String message) {
 		Image image2=new Image(Objects.requireNonNull(getClass().getResource("/image/somethingWrong.png")).toString());
 		Notifications notification=Notifications.create().title("try again latter")
-				.text("something wrong")
+				.text(message)
 				.darkStyle()
 				.hideAfter(Duration.seconds(5))
 				.graphic(new ImageView(image2));
@@ -111,7 +111,7 @@ public class notificationsClass {
 	public void showNotificaitonEnterCorrectInromation() {
 		Image image=new Image(Objects.requireNonNull(getClass().getResource("/image/incorrect.png")).toString());
 		Notifications notification=Notifications.create().title("Wrong Information's")
-				.text("Please check the information")
+				.text("Please check the Information")
 				.darkStyle()
 				.hideAfter(Duration.seconds(5))
 				.graphic(new ImageView(image));
@@ -122,6 +122,46 @@ public class notificationsClass {
 		Image image = new Image(Objects.requireNonNull(getClass().getResource("/image/emailMain.png")).toString());
 		Notifications notification = Notifications.create().title("Email Address")
 				.text("Add your email address")
+				.darkStyle()
+				.hideAfter(Duration.seconds(5))
+				.graphic(new ImageView(image));
+		notification.show();
+	}
+
+    public void showNotificationsEnterNewPassword() {
+		Image image = new Image(Objects.requireNonNull(getClass().getResource("/image/passwordChange.png")).toString());
+		Notifications notification = Notifications.create().title("Password")
+				.text("Add new and different Password")
+				.darkStyle()
+				.hideAfter(Duration.seconds(5))
+				.graphic(new ImageView(image));
+		notification.show();
+    }
+
+	public void showNotificationsEnternewUsername() {
+		Image image = new Image(Objects.requireNonNull(getClass().getResource("/image/review.png")).toString());
+		Notifications notification = Notifications.create().title("Username")
+				.text("Add new and different Username")
+				.darkStyle()
+				.hideAfter(Duration.seconds(5))
+				.graphic(new ImageView(image));
+		notification.show();
+	}
+
+	public void shownotificationsPleaseWait() {
+		Image image = new Image(Objects.requireNonNull(getClass().getResource("/image/review.png")).toString());
+		Notifications notification = Notifications.create().title("Please Wait")
+				.text("It may take some time")
+				.darkStyle()
+				.hideAfter(Duration.seconds(5))
+				.graphic(new ImageView(image));
+		notification.show();
+	}
+
+	public void showNotificationsSuccessfullyCreateAccount() {
+		Image image = new Image(Objects.requireNonNull(getClass().getResource("/image/account_created_successfully.png")).toString());
+		Notifications notification = Notifications.create().title("account created successfully")
+				.text("Now you can log in")
 				.darkStyle()
 				.hideAfter(Duration.seconds(5))
 				.graphic(new ImageView(image));

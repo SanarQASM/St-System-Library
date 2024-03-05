@@ -27,7 +27,8 @@ public class Main extends Application {
 			Image image = new Image(Objects.requireNonNull(getClass().getResource("/image/mainImage.png")).toString());
 			primaryStage.getIcons().add(image);
 			accountController aC = loader.getController();
-			aC.setController(aC);
+			notificationsClass nC=new notificationsClass();
+			aC.setController(aC,nC);
 			enterCodeController eCC=new enterCodeController();
 			eCC.setAccountController(aC);
 			aC.setStage(primaryStage);
@@ -39,7 +40,7 @@ public class Main extends Application {
 			primaryStage.show();
 		} catch (Exception e) {
 			notificationsClass nC=new notificationsClass();
-			nC.showNotificaitonSomethingWrong();
+			nC.showNotificaitonSomethingWrong("Failed to Start");
 		}
 	}
 

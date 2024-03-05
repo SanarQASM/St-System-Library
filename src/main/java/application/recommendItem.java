@@ -73,60 +73,60 @@ public class recommendItem {
 	}
 
 	public void setStarLevel(int digit) {// danani nrx bo starakan ba pey last digit
-		Iterator<Entry<String, Integer>> iterator = application.bookController.starLevelMap.entrySet().iterator();
-		while (iterator.hasNext()) {
-			Entry<String, Integer> entry = iterator.next();
-			String lastDigitOfEachElementInMap = entry.getKey();
-			char lastDigit = lastDigitOfEachElementInMap.charAt(lastDigitOfEachElementInMap.length() - 1);
-			lastDigitOfEachElementInMap = String.valueOf(lastDigit);
-			int in = Integer.parseInt(lastDigitOfEachElementInMap);
-			if (digit == in) {
-				int starLevel = entry.getValue();
-				if (starLevel == 1) {
-					opacityImageOne();
-				} else if (starLevel == 2) {
-					opacityImageTwo();
-				} else if (starLevel == 3) {
-					opacityImageThree();
-				} else if (starLevel == 4) {
-					opacityImageFour();
-				} else {
-					opacityImageFive();
-				}
-				break;
-			}
-		}
+//		Iterator<Entry<String, Integer>> iterator = application.bookController.starLevelMap.entrySet().iterator();
+//		while (iterator.hasNext()) {
+//			Entry<String, Integer> entry = iterator.next();
+//			String lastDigitOfEachElementInMap = entry.getKey();
+//			char lastDigit = lastDigitOfEachElementInMap.charAt(lastDigitOfEachElementInMap.length() - 1);
+//			lastDigitOfEachElementInMap = String.valueOf(lastDigit);
+//			int in = Integer.parseInt(lastDigitOfEachElementInMap);
+//			if (digit == in) {
+//				int starLevel = entry.getValue();
+//				if (starLevel == 1) {
+//					opacityImageOne();
+//				} else if (starLevel == 2) {
+//					opacityImageTwo();
+//				} else if (starLevel == 3) {
+//					opacityImageThree();
+//				} else if (starLevel == 4) {
+//					opacityImageFour();
+//				} else {
+//					opacityImageFive();
+//				}
+//				break;
+//			}
+//		}
 	}
 
 	public void setImageView(int digit) {// danani nrx bo image ba pey last digit
-		Iterator<Entry<String, String>> iterator = application.bookController.imageURLMap.entrySet().iterator();
-		while (iterator.hasNext()) {
-			Entry<String, String> entry = iterator.next();
-			String lastDigitOfEachElementInMap = entry.getKey();
-			char lastDigit = lastDigitOfEachElementInMap.charAt(lastDigitOfEachElementInMap.length() - 1);
-			lastDigitOfEachElementInMap = String.valueOf(lastDigit);
-			int in = Integer.parseInt(lastDigitOfEachElementInMap);
-			if (digit == in) {
-				Image image = new Image(entry.getValue(), 159, 161, false, true);
-				imageView.setImage(image);
-				break;
-			}
-		}
+//		Iterator<Entry<String, String>> iterator = application.bookController.imageURLMap.entrySet().iterator();
+//		while (iterator.hasNext()) {
+//			Entry<String, String> entry = iterator.next();
+//			String lastDigitOfEachElementInMap = entry.getKey();
+//			char lastDigit = lastDigitOfEachElementInMap.charAt(lastDigitOfEachElementInMap.length() - 1);
+//			lastDigitOfEachElementInMap = String.valueOf(lastDigit);
+//			int in = Integer.parseInt(lastDigitOfEachElementInMap);
+//			if (digit == in) {
+//				Image image = new Image(entry.getValue(), 159, 161, false, true);
+//				imageView.setImage(image);
+//				break;
+//			}
+//		}
 	}
 
 	public void setLabelText(int digit) {// danani nrx bo nawi ba pey last digit
-		Iterator<Entry<String, String>> iterator = application.bookController.nameMap.entrySet().iterator();
-		while (iterator.hasNext()) {
-			Entry<String, String> entry = iterator.next();
-			String lastDigitOfEachElementInMap = entry.getKey();
-			char lastDigit = lastDigitOfEachElementInMap.charAt(lastDigitOfEachElementInMap.length() - 1);
-			lastDigitOfEachElementInMap = String.valueOf(lastDigit);
-			int in = Integer.parseInt(lastDigitOfEachElementInMap);
-			if (digit == in) {
-				labelName.setText(entry.getValue());
-				break;
-			}
-		}
+//		Iterator<Entry<String, String>> iterator = application.bookController.nameMap.entrySet().iterator();
+//		while (iterator.hasNext()) {
+//			Entry<String, String> entry = iterator.next();
+//			String lastDigitOfEachElementInMap = entry.getKey();
+//			char lastDigit = lastDigitOfEachElementInMap.charAt(lastDigitOfEachElementInMap.length() - 1);
+//			lastDigitOfEachElementInMap = String.valueOf(lastDigit);
+//			int in = Integer.parseInt(lastDigitOfEachElementInMap);
+//			if (digit == in) {
+//				labelName.setText(entry.getValue());
+//				break;
+//			}
+//		}
 	}
 
 	public void settingDataWithoutAddingVbox(int digit) {// set kdni data la map bo har vboxek

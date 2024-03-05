@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 
 public class enterEmailController {
 	private static Stage tempStage;
+	private static notificationsClass nC;
 
 	@FXML
 	private AnchorPane enterEmailAnchor;
@@ -34,11 +35,11 @@ public class enterEmailController {
 	@FXML
 	private Label errorEmail;
 
-	public void setStage(Stage stage) {
-		tempStage = stage;
-	}
-
-
+public enterEmailController(notificationsClass nC, Stage stage){
+	enterEmailController.nC=nC;
+	enterEmailController.tempStage=stage;
+}
+public enterEmailController(){};
 	@FXML
 	void backToregister(ActionEvent event) {
 		accountController aC = new accountController();
@@ -48,16 +49,14 @@ public class enterEmailController {
 
 	@FXML
 	void findEmail(ActionEvent event) {
-
-				if (email.getText().length()>=99) {
+		String emailText = email.getText().trim();
+				if (emailText.length()>=99) {
 					errorEmail.setText("Too Long!!!");
 					email.setStyle("-fx-border-color: red;");
 				}
 				else if (!(email.getText().isEmpty())) {
-					       String emailText = email.getText().trim();
-
 							if (isGmailAddress(emailText) && !(emailText.contains(" "))) {
-								DatabaseConnection databaseCon = new DatabaseConnection();
+								DatabaseConnection databaseCon = new DatabaseConnection(nC);
 								if (!(databaseCon.checkEmailInDatabase(emailText))) {
 									final int[] result = {0};
 									Task<Void> task = new Task<>() {
@@ -75,43 +74,43 @@ public class enterEmailController {
 												"/image/emailMain.png")).toString());
 										emailIcon.setImage(image);
 										if(result[0] ==-1) {
-											notificationsClass nC=new notificationsClass();
 											nC.showNotificaitonCheckYourEmail();
 											errorEmail.setText("");
 											email.setStyle("-fx-border-color: #0077b6;");
 											FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFile/enterCode.fxml"));
-											enterCodeController eCC = new enterCodeController();
-                                            Parent root = null;
                                             try {
-                                                root = loader.load();
+												Parent root= loader.load();
+												Scene scene = new Scene(root);
+												Stage stage = new Stage();
+												scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/fxmlFile/application.css")).toExternalForm());
+												stage.setScene(scene);
+												stage.setResizable(false);
+												stage.setTitle("Enter Code");
+
+												notificationsClass nCController=new notificationsClass();
+												new enterCodeController(stage, emailText,nCController);
+												image =new Image(Objects.requireNonNull(getClass().getResource("/image/gmail.png")).toString());
+												stage.getIcons().add(image);
+												tempStage.hide();
+												stage.show();
+												stage.setOnCloseRequest(event1 -> {
+													event1.consume();
+													Main m = new Main();
+													m.logout(stage);
+												});
+
                                             } catch (IOException e) {
-												nC.showNotificaitonSomethingWrong();
+												nC.showNotificaitonSomethingWrong("failed to Find Email");
                                             }
-                                            Scene scene = new Scene(root);
-											Stage stage = new Stage();
-											scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/fxmlFile/application.css")).toExternalForm());
-											stage.setScene(scene);
-											stage.setResizable(false);
-											stage.setTitle("Enter Code");
-											eCC.setStage(stage);
-											eCC.setEmail(emailText);
-											image =new Image(Objects.requireNonNull(getClass().getResource("/image/gmail.png")).toString());
-											stage.getIcons().add(image);
-											tempStage.hide();
-											stage.show();
-											stage.setOnCloseRequest(event1 -> {
-												event1.consume();
-												Main m = new Main();
-												m.logout(stage);
-											});
+
 										}
 										else if(result[0] ==1) {
-											notificationsClass nC=new notificationsClass();
+											errorEmail.setText("");
+											email.setStyle("-fx-border-color: red;");
 											nC.showNotificaitonNointernet();
 										}
 										else{
-											notificationsClass nC=new notificationsClass();
-											nC.showNotificaitonSomethingWrong();
+											nC.showNotificaitonSomethingWrong("failed To Find Email");
 											errorEmail.setText("Not Found");
 											email.setStyle("-fx-border-color: red;");
 										}
@@ -150,5 +149,4 @@ public class enterEmailController {
 		Matcher matcher = pattern.matcher(email);
 		return matcher.matches();
 	}
-
 }

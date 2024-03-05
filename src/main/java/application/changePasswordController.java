@@ -39,16 +39,21 @@ public class changePasswordController {
 	@FXML
 	private ImageView showPasswordInChange;
 
-    private static String tempWayToChange;
+    private static String gEmail;
     private static Stage stage;
 	private boolean confirmPassEntered;
 	private boolean newPassEntered;
 	private boolean passwordIsChanged;
 	private static accountController accontCont;
-	
-	public void setTempWayToChange(String tempWayToChange) {
-		changePasswordController.tempWayToChange=tempWayToChange;
+	private static notificationsClass nC;
+
+	public changePasswordController(String gEmail,Stage stage,notificationsClass nC){
+		changePasswordController.gEmail=gEmail;
+		changePasswordController.stage=stage;
+		changePasswordController.nC=nC;
 	}
+	public changePasswordController(){}
+
 	public void setAccountController(accountController accountCont) {
 		changePasswordController.accontCont=accountCont;
 	}
@@ -73,7 +78,7 @@ public class changePasswordController {
 	}
 
 	@FXML
-	void changePassowrd(ActionEvent event) throws IOException {
+	void changePassowrd(ActionEvent event){
 		checkHaveNewPass();
 		checkHaveConfirmPass();
 		if (!(newPasswordPass.isVisible())) {
@@ -90,8 +95,7 @@ public class changePasswordController {
                                 try {
 									setNewPassToOldPass();
                                 } catch (IOException e) {
-                                    notificationsClass nC=new notificationsClass();
-									nC.showNotificaitonSomethingWrong();
+									nC.showNotificaitonSomethingWrong("failed to change Password");
                                 }
                             } else {
 								confirmationPasswordError.setText("Is not The Same!");
@@ -113,7 +117,6 @@ public class changePasswordController {
 						newPasswordText.setText("");
 						confirmationPasswordPass.setText("");
 						confirmationPassText.setText("");
-						notificationsClass nC = new notificationsClass();
 						nC.showNotificaitonPasswordChangeSuccussfuly();
 		confirmPassEntered = false;
 		newPassEntered = false;
@@ -126,20 +129,20 @@ public class changePasswordController {
 	}
 
 	private void setNewPassToOldPass() throws IOException {
-		DatabaseConnection databaseCon = new DatabaseConnection();
-		if (enterEmailController.isGmailAddress(tempWayToChange)) {
-			if (databaseCon.checkToSameOldPassWithEmail(tempWayToChange, newPasswordPass.getText())) {
+		DatabaseConnection databaseCon = new DatabaseConnection(nC);
+		if (enterEmailController.isGmailAddress(gEmail)) {
+			if (databaseCon.checkToSameOldPassWithEmail(gEmail, newPasswordPass.getText())) {
 				newPasswordError.setText("Same Old Password!");
 			} else {
-				databaseCon.setNewToOldPasswordWithEmail(tempWayToChange, newPasswordPass.getText());
+				databaseCon.setNewToOldPasswordWithEmail(gEmail, newPasswordPass.getText());
 				passwordIsChanged = true;
 			}
 		}
 		else {
-			if (databaseCon.checkToSameOldPass(tempWayToChange, newPasswordPass.getText())) {
+			if (databaseCon.checkToSameOldPass(gEmail, newPasswordPass.getText())) {
 				newPasswordError.setText("Same Old Password!");
 			} else {
-				databaseCon.setNewToOldPassword(tempWayToChange, newPasswordPass.getText());
+				databaseCon.setNewToOldPassword(gEmail, newPasswordPass.getText());
 				passwordIsChanged = true;
 			}
 		}
@@ -183,7 +186,7 @@ public class changePasswordController {
 			confirmationPassText.setVisible(true);
 			newPasswordText.setText(newPasswordPass.getText());
 			confirmationPassText.setText(confirmationPasswordPass.getText());
-			Image image = new Image(getClass().getResource("/image/hidePass.png").toString());
+			Image image = new Image(Objects.requireNonNull(getClass().getResource("/image/hidePass.png")).toString());
 			showPasswordInChange.setImage(image);
 		} else {
 			newPasswordPass.setVisible(true);
@@ -192,12 +195,9 @@ public class changePasswordController {
 			confirmationPassText.setVisible(false);
 			confirmationPasswordPass.setText(confirmationPassText.getText());
 			newPasswordPass.setText(newPasswordText.getText());
-			Image image = new Image(getClass().getResource("/image/showPass.png").toString());
+			Image image = new Image(Objects.requireNonNull(getClass().getResource("/image/showPass.png")).toString());
 			showPasswordInChange.setImage(image);
 		}
-	}
-	public void setStage(Stage stage) {
-		changePasswordController.stage=stage;
 	}
 
 }

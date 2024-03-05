@@ -474,7 +474,7 @@
                         <Image url="@../image/shape.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="logoSystem" fitHeight="132.0" fitWidth="140.0" layoutX="84.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="132.0" fitWidth="140.0" layoutX="84.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../image/logoSystemImage.png" />
                      </image>

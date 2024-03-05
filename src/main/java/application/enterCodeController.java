@@ -29,6 +29,7 @@ public class enterCodeController implements Initializable {
 	private int remainingSeconds = 60;
 	private static int countResend = 1;
 	public static accountController aCC;
+	private static notificationsClass nC;
 
 	@FXML
 	private TextField code;
@@ -48,7 +49,13 @@ public class enterCodeController implements Initializable {
 	@FXML
 	private Label time;
 
-    
+	public enterCodeController(Stage stage,String email,notificationsClass nC){
+		enterCodeController.tempStage=stage;
+		enterCodeController.tempEmail=email;
+		enterCodeController.nC=nC;
+		nC.showNotificaitonCheckYourEmail();
+	}
+    public enterCodeController(){}
 	@FXML
 	void backToEnterEmail(ActionEvent event) {
 		enterEmailController eEC = new enterEmailController();
@@ -65,8 +72,8 @@ public class enterCodeController implements Initializable {
 					Task<Void> task = new Task<>() {
 						@Override
 						protected Void call(){
-							result[0] =emailSender.randomNumbers.equals(code.getText());
-							return null;
+                    result[0] =emailSender.randomNumbers.equals(code.getText());
+                    return null;
 						}
 					};
 					new Thread(task).start();
@@ -75,8 +82,13 @@ public class enterCodeController implements Initializable {
 							errorCode.setText("");
 							code.setStyle("-fx-border-color:red;");
 							aCC.showStage();
-							aCC.registerDone();
-							tempStage.close();
+                            try {
+                                aCC.registerDone();
+                            } catch (Exception e) {
+                                nC.showNotificaitonSomethingWrong("Can Not Encryption");
+                            }
+                            tempStage.close();
+							nC.showNotificationsSuccessfullyCreateAccount();
 						} else {
 							errorCode.setText("Not Same!");
 							code.setStyle("-fx-border-color: red;");
@@ -129,7 +141,6 @@ public class enterCodeController implements Initializable {
 					timeline.setCycleCount(Timeline.INDEFINITE);
 					timeline.play();
 				} else {
-					notificationsClass nC=new notificationsClass();
 					nC.showNotificationTooManyTry();
 					countResend=1;
 					tempStage.close();
@@ -150,15 +161,6 @@ public class enterCodeController implements Initializable {
 		});
 	}
 
-	public void setStage(Stage stage) {
-		tempStage = stage;
-	}
-
-	public void setEmail(String email) {
-		tempEmail = email;
-	}
-
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		final Timeline timeline = new Timeline();
@@ -175,8 +177,6 @@ public class enterCodeController implements Initializable {
 		}));
 		timeline.setCycleCount(Timeline.INDEFINITE);
 		timeline.play();
-		notificationsClass nC=new notificationsClass();
-		nC.showNotificaitonCheckYourEmail();
 	}
 
 	public String getTempEmail() {
@@ -184,8 +184,5 @@ public class enterCodeController implements Initializable {
 	}
 	public void setAccountController(accountController aCC) {
 		enterCodeController.aCC=aCC;
-	}
-	public accountController getAccountController() {
-		return aCC;
 	}
 }

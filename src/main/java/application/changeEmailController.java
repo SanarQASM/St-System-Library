@@ -1,22 +1,32 @@
 package application;
 
 import java.io.IOException;
+import java.util.Objects;
 
+import com.mysql.cj.protocol.x.XMessage;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class changeEmailController {
 	private static Stage tempStage;
 	private static accountController aC;
+	private static notificationsClass nC;
+	private static changeEmailController cEC;
 	private int remainingSeconds = 60;
 	private static int countResend = 1;
+	private static String messageTemp;
 	
     @FXML
     private TextField code;
@@ -35,17 +45,23 @@ public class changeEmailController {
     
     @FXML
     private Button sendCodeButton;
-    
-    @FXML
-    private Label resendCodeAfter;
+
+	@FXML
+	private AnchorPane emailCodeFrame;
+
+	@FXML
+	private ImageView emailCodeIcon;
 
     @FXML
     private Label time;
     
-    
-    public void setStage(Stage tempStage) {
-    	changeEmailController.tempStage=tempStage;
-    }
+    public changeEmailController(Stage stage,notificationsClass nC,changeEmailController cEC){
+		changeEmailController.tempStage=stage;
+		changeEmailController.nC=nC;
+		changeEmailController.cEC =cEC;
+	}
+	public changeEmailController(){}
+
     public void setAccountController(accountController aC) {
     	changeEmailController.aC=aC;
     }
@@ -62,75 +78,154 @@ public class changeEmailController {
     }
 
     @FXML
-    void process(ActionEvent event) throws IOException {
-    	code.setText(code.getText().trim());
-    	if (code.getText().isEmpty()) {
-    		codeError.setText("Empty!");
-			code.setStyle("-fx-border-color: red;");
-    	}
-    	else if(!(emailSender.randomNumbers.equals(code.getText()))){
-    		codeError.setText("Not Same!");
-			code.setStyle("-fx-border-color: red;");
-    	}
-    	else {
-    		codeError.setText("");
-			code.setStyle("-fx-border-color: #0077b6;");
-			tempStage.close();
-			if (aC!=null) {
-				aC.openChangePasswordController(code.getText());
-				aC=null;
-			}else {
-				DatabaseConnection databaseCon=new DatabaseConnection();
-				mainController mC=new mainController();
-				notificationsClass nC=new notificationsClass();
-				nC.showNotificaitonNewEmailSetSuccussfully();
-				databaseCon.setNewEmailToOldThroughUsername(mC.getTempUsername(),email.getText());
-				mC.showStage();
-				
+    void process(ActionEvent event){
+
+		Task<Void> task = new Task<>() {
+			@Override
+			protected Void call() throws Exception {
+				code.setText(code.getText().trim());
+				if (code.getText().isEmpty()) {
+					codeError.setText("Empty!");
+					code.setStyle("-fx-border-color: red;");
+					messageTemp="Code can not Empty!";
+					throw new Exception(messageTemp);
+				} else if (!(emailSender.randomNumbers.equals(code.getText()))) {
+					codeError.setText("Not Same!");
+					code.setStyle("-fx-border-color: red;");
+					messageTemp="Enter The Same Code!";
+					throw new Exception(messageTemp);
+				} else {
+					codeError.setText("");
+					code.setStyle("-fx-border-color: #0077b6;");
+					tempStage.close();
+				}
+				return null;
 			}
-				
-    	}
+		};
+		task.setOnFailed(_ -> {
+			Platform.runLater(() -> {
+				Image image = new Image(Objects.requireNonNull(getClass().getResource(
+						"/image/forgetEmail.png")).toString());
+				emailCodeIcon.setImage(image);
+				emailCodeFrame.setDisable(false);
+				nC.showNotificaitonSomethingWrong(messageTemp);
+			});
+		});
+
+		task.setOnSucceeded(_ -> {
+				Platform.runLater(() -> {
+				Image image = new Image(Objects.requireNonNull(getClass().getResource(
+						"/image/forgetEmail.png")).toString());
+				emailCodeIcon.setImage(image);
+				emailCodeFrame.setDisable(false);
+				nC.showNotificaitonCheckYourEmail();
+					if (aC!=null) {
+                        try {
+                            aC.openChangePasswordController(email.getText());
+                        } catch (IOException e) {
+                            throw new RuntimeException("Can Not Loading the FXML File");
+                        }
+                        aC=null;
+					}else {
+						DatabaseConnection databaseCon=new DatabaseConnection(nC);
+						mainController mC=new mainController();
+						nC.showNotificaitonNewEmailSetSuccussfully();
+						databaseCon.setNewEmailToOldThroughUsername(mC.getTempUsername(),email.getText());
+						mC.showStage();
+					}
+			});
+		});
+		new Thread(task).start();
+		Platform.runLater(() -> {
+			Image image = new Image(Objects.requireNonNull(getClass().getResource(
+					"/image/changeToLoading.gif")).toString());
+			emailCodeIcon.setImage(image);
+			emailCodeFrame.setDisable(true);
+		});
+
     }
 
     @FXML
     void sendCode(ActionEvent event) {
-    		code.setDisable(true);
-    		processButtonToSendCode.setDisable(true);
-    	checkEmailToHave();
+		Task<Void> task = new Task<>() {
+			@Override
+			protected Void call() throws Exception {
+				code.setDisable(true);
+				processButtonToSendCode.setDisable(true);
+				email.setText(email.getText().trim());
+				checkEmailToHave(email.getText());
+				return null;
+			}
+		};
+
+		task.setOnFailed(_ -> {
+			Platform.runLater(() -> {
+				Image image = new Image(Objects.requireNonNull(getClass().getResource(
+						"/image/forgetEmail.png")).toString());
+				emailCodeIcon.setImage(image);
+				emailCodeFrame.setDisable(false);
+				nC.showNotificaitonSomethingWrong(messageTemp);
+			});
+		});
+		task.setOnSucceeded(_ -> {
+			Platform.runLater(() -> {
+				Image image = new Image(Objects.requireNonNull(getClass().getResource(
+						"/image/forgetEmail.png")).toString());
+				emailCodeIcon.setImage(image);
+				emailCodeFrame.setDisable(false);
+				nC.showNotificaitonCheckYourEmail();
+			});
+		});
+
+		new Thread(task).start();
+		Platform.runLater(() -> {
+			Image image = new Image(Objects.requireNonNull(getClass().getResource(
+					"/image/changeToLoading.gif")).toString());
+			emailCodeIcon.setImage(image);
+			emailCodeFrame.setDisable(true);
+		});
+
     }
-    private void checkEmailToHave() {
-    	email.setText(email.getText().trim());
-    	DatabaseConnection databaseCon=new DatabaseConnection();
-		if (email.getText().isEmpty()) {
-			emailError.setText("Empty!");
-			email.setStyle("-fx-border-color: red;");
-		}else if (!(enterEmailController.isGmailAddress(email.getText()))) {
-			emailError.setText("Not Found!!!");
-			email.setStyle("-fx-border-color: red;");
+    private void checkEmailToHave(String Gemail) throws Exception {
+		if (Gemail.isEmpty()) {
+			Platform.runLater(() -> {
+				emailError.setText("Empty!");
+				email.setStyle("-fx-border-color: red;");
+				messageTemp = "Email can not Empty!";
+			});
+			throw new Exception(messageTemp);
+		}else if (!(enterEmailController.isGmailAddress(Gemail))) {
+			Platform.runLater(() -> {
+				emailError.setText("Not Found!!!");
+				email.setStyle("-fx-border-color: red;");
+				messageTemp = "Email Not Found Please Enter Again!";
+			});
+			throw new Exception(messageTemp);
 		}
-		else if (databaseCon.checkEmailInDatabase(email.getText())){
-			emailError.setText("The Same Old Email!!!");
-			email.setStyle("-fx-border-color: red;");
-		}
-		else {
-			emailError.setText("");
-			email.setStyle("-fx-border-color: #0077b6;");
-			emailSender emailSender=new emailSender();
-			int result =emailSender.startSendMail(email.getText());
-			if (result ==1) {
-				notificationsClass nC=new notificationsClass();
-				nC.showNotificaitonNointernet();
-			}else if(result ==2){
-				notificationsClass nC=new notificationsClass();
-				nC.showNotificaitonSomethingWrong();
+		else if (aC!=null) {
+			if (checkEmailIndatabse(Gemail)){
+				sendEmail();
 			}
 			else {
-				code.setDisable(false);
-	    		processButtonToSendCode.setDisable(false);
-	    		sendCodeButton.setDisable(true);
-	    		startTime();
-				notificationsClass nC=new notificationsClass();
-				nC.showNotificaitonCheckYourEmail();
+                Platform.runLater(() -> {
+				emailError.setText("Not Found!!!");
+				email.setStyle("-fx-border-color: red;");
+                messageTemp="Email Not Found!";
+                });
+				throw new Exception(messageTemp);
+			}
+
+		}
+		else {
+			if (checkEmailIndatabse(Gemail)) {
+                Platform.runLater(() -> {
+                    emailError.setText("Please Enter different Email");
+                    email.setStyle("-fx-border-color: red;");
+                    messageTemp = "Email Must be Different";
+                });
+				throw new Exception(messageTemp);
+			} else {
+				sendEmail();
 			}
 		}
     }
@@ -155,4 +250,46 @@ public class changeEmailController {
 					timeline.play();
 			}
 		}
+
+		private boolean checkEmailIndatabse(String Gemail){
+		DatabaseConnection databaseCon=new DatabaseConnection();
+            if (databaseCon.checkEmailInDatabase(Gemail)) {
+                Platform.runLater(() -> {
+                    emailError.setText("");
+                    email.setStyle("-fx-border-color: #0077b6;");
+                });
+                return true;
+            }
+            else{
+                return false;
+            }
+    }
+	private void sendEmail() throws Exception {
+		Platform.runLater(() -> {
+					emailError.setText("");
+					email.setStyle("-fx-border-color: #0077b6;");
+				});
+			emailSender emailSender = new emailSender();
+			int result = emailSender.startSendMail(cEC.email.getText());
+		if (result ==1) {
+			Platform.runLater(() -> {
+				nC.showNotificaitonNointernet();
+				messageTemp = "Internet Need To Send Code!";
+			});
+			throw new Exception(messageTemp);
+		}else if(result ==2){
+			Platform.runLater(() -> {
+				nC.showNotificaitonSomethingWrong("failed to check Email");
+				messageTemp = "Failed to Send Email To Your Email!";
+			});
+			throw new Exception(messageTemp);
+		}
+		else {
+			cEC.code.setDisable(false);
+			cEC.processButtonToSendCode.setDisable(false);
+			cEC.sendCodeButton.setDisable(true);
+			startTime();
+			nC.showNotificaitonCheckYourEmail();
+		}
+	}
 }

@@ -51,7 +51,13 @@
 	-fx-border-style: solid;
 	-fx-border-color:white;
 	}
-	
+.buttonWithImage{
+	-fx-background-color: transparent;
+	-fx-background-radius: 8;
+	-fx-border-radius: 8;
+	-fx-border-style: solid;
+	-fx-border-color:white;
+}
 .transmate{
 	-fx-background-color: transparent;
 }

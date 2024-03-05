@@ -2,12 +2,7 @@ package application;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.ResourceBundle;
-
+import java.util.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +16,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -122,8 +116,10 @@ public class mainController implements Initializable {
 	private static List<Character> lastDigit = new ArrayList<>();
 	private static String tempUsernameAccount;
 	private static Stage tempStage;
+	private static notificationsClass nC;
 	
-	public mainController(String text) {
+	public mainController(String text,notificationsClass nC) {
+		mainController.nC=nC;
 		tempUsernameAccount = text;
 	}
 
@@ -132,50 +128,49 @@ public class mainController implements Initializable {
 
 	@FXML
 	void createShelves(ActionEvent event) {
-		bookController bC = new bookController();
-		bC.printBothMap();
+//		bookController bC = new bookController();
+//		bC.printBothMap();
 	}
 
 	@FXML
 	void searchClick(MouseEvent event) {
 		List<HBox> listOfHboxSearch = new ArrayList<>();
 		listOfHboxSearch.clear();
-
-		if (!(searchText.getText().isEmpty()) && !bookController.nameMap.isEmpty()) {
-			getAllLabelName();
-			for (HBox eachHbox : listOfHbox) {
-				for (char eachChar : lastDigit) {
-					if (eachHbox.getId().charAt(eachHbox.getId().length() - 1) == eachChar) {
-						listOfHboxSearch.add(eachHbox);
-					}
-				}
-			}
-			if (listOfHboxSearch.isEmpty()) {
-				resultSearch.setText("Nothing Found!!!");
-			} else {
-				resultSearch.setText(STR."\{listOfHboxSearch.size()} Result Found.");
-			}
-			hBoxScrollPane.getChildren().clear();
-			hBoxScrollPane.getChildren().setAll(listOfHboxSearch);
-		} else if (!(searchText.getText().isEmpty()) || searchText.getText().isEmpty()) {
-			resultSearch.setText("Nothing Found, Add Book.");
-			resultSearch.setScaleY(1.1);
-			resultSearch.setScaleX(1.1);
-		} else {
-			addAndGenerateIdForHbox();
-		}
+//		if (!(searchText.getText().isEmpty()) && !bookController.nameMap.isEmpty()) {
+//			getAllLabelName();
+//			for (HBox eachHbox : listOfHbox) {
+//				for (char eachChar : lastDigit) {
+//					if (eachHbox.getId().charAt(eachHbox.getId().length() - 1) == eachChar) {
+//						listOfHboxSearch.add(eachHbox);
+//					}
+//				}
+//			}
+//			if (listOfHboxSearch.isEmpty()) {
+//				resultSearch.setText("Nothing Found!!!");
+//			} else {
+//				resultSearch.setText(STR."\{listOfHboxSearch.size()} Result Found.");
+//			}
+//			hBoxScrollPane.getChildren().clear();
+//			hBoxScrollPane.getChildren().setAll(listOfHboxSearch);
+//		} else if (!(searchText.getText().isEmpty()) || searchText.getText().isEmpty()) {
+//			resultSearch.setText("Nothing Found, Add Book.");
+//			resultSearch.setScaleY(1.1);
+//			resultSearch.setScaleX(1.1);
+//		} else {
+//			addAndGenerateIdForHbox();
+//		}
 	}
 
 	private void getAllLabelName() {
-		Iterator<Entry<String, String>> iterator = application.bookController.nameMap.entrySet().iterator();
-		lastDigit.clear();
-		while (iterator.hasNext()) {
-			Entry<String, String> entry = iterator.next();
-			if (entry.getValue().contains(searchText.getText())) {
-				String lastDigitOfEachElementInMap = entry.getKey();
-				lastDigit.add(lastDigitOfEachElementInMap.charAt(lastDigitOfEachElementInMap.length() - 1));
-			}
-		}
+//		Iterator<Entry<String, String>> iterator = application.bookController.nameMap.entrySet().iterator();
+//		lastDigit.clear();
+//		while (iterator.hasNext()) {
+//			Entry<String, String> entry = iterator.next();
+//			if (entry.getValue().contains(searchText.getText())) {
+//				String lastDigitOfEachElementInMap = entry.getKey();
+//				lastDigit.add(lastDigitOfEachElementInMap.charAt(lastDigitOfEachElementInMap.length() - 1));
+//			}
+//		}
 	}
 
 	@FXML
@@ -189,6 +184,9 @@ public class mainController implements Initializable {
 		stage.setTitle("System Book St Library");
 		Image image =new Image(getClass().getResource("/image/mainImageBookSystem.png").toString());
 		addBookInformation aDI=new addBookInformation();
+		aDI.setController(this,aDI);
+		notificationsClass nC=new notificationsClass();
+		aDI.setNotificationsClass(nC);
 		aDI.setStage(stage);
 		tempStage.hide();
 		stage.getIcons().add(image);
@@ -223,9 +221,9 @@ public class mainController implements Initializable {
 									// rashkrdnawa
 			listOfHbox.remove(index);
 			int lastDigit = Character.getNumericValue(parentId.charAt(parentId.length() - 1));// zhmaray parent id ka la
-																								// kota pit haya
-			bookController bC = new bookController();
-			bC.deleteThreeMap(lastDigit);// aw digita danerin bo rashkrnaway hamw aw informationanay ka la mapakan haya
+//																								// kota pit haya
+//			bookController bC = new bookController();
+//			bC.deleteThreeMap(lastDigit);// aw digita danerin bo rashkrnaway hamw aw informationanay ka la mapakan haya
 			addAndGenerateIdForHbox();
 			count--;// bo labelaka kami dakainawa
 			if (count <= 0) {// agar count bwitawa 0 awa
@@ -285,9 +283,9 @@ public class mainController implements Initializable {
 		stage.setScene(scene);
 		stage.setResizable(false);
 		stage.setTitle("Setting");
-		settingController sC=new settingController();
+		notificationsClass nCContoller=new notificationsClass();
+		new settingController(stage,nCContoller);
 		tempStage.hide();
-		sC.setStage(stage);
 		Image image =new Image(getClass().getResource("/image/setting.png").toString());
 		stage.getIcons().add(image);
 		stage.show();
@@ -311,12 +309,19 @@ public class mainController implements Initializable {
 		for (HBox eachHbox : allHboxTab) {
 			eachHbox.setStyle("-fx-background-color: transparent;" + "-fx-opacity: 1;");
 		}
+		usernameLabel.setText(tempUsernameAccount);
 		uploadedTab.setStyle("-fx-background-color: #18f08a;" + "-fx-opacity:0.7;");
 		updateReviewedBooks();
 		updateMainFrame();
-	}
+        try {
+            updateResentlyUploadedBook();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	@FXML
+
+    @FXML
 	void referesh(MouseEvent event) {
 		usernameLabel.setText(tempUsernameAccount);
 		updateReviewedBooks();
@@ -370,20 +375,20 @@ public class mainController implements Initializable {
 	}
 
 	private void checkYourTopBook() throws IOException {
-		List<Integer> star4And5ID = new ArrayList<Integer>();
-		Iterator<String> iterator2 = bookController.starLevelMap.keySet().iterator();
-		while (iterator2.hasNext()) {
-			String key = iterator2.next();
-			int last = Character.getNumericValue(key.charAt(key.length() - 1));
-			int valueInStarMap = bookController.starLevelMap.get(key);
-			if (valueInStarMap == 4 || valueInStarMap == 5) {
-				star4And5ID.add(last);
-			}
-		}
-
-		if (!(star4And5ID.size() == 0)) {
-			addYourTobBookToGridPane(star4And5ID);
-		}
+//		List<Integer> star4And5ID = new ArrayList<Integer>();
+//		Iterator<String> iterator2 = bookController.starLevelMap.keySet().iterator();
+//		while (iterator2.hasNext()) {
+//			String key = iterator2.next();
+//			int last = Character.getNumericValue(key.charAt(key.length() - 1));
+//			int valueInStarMap = bookController.starLevelMap.get(key);
+//			if (valueInStarMap == 4 || valueInStarMap == 5) {
+//				star4And5ID.add(last);
+//			}
+//		}
+//
+//		if (!(star4And5ID.size() == 0)) {
+//			addYourTobBookToGridPane(star4And5ID);
+//		}
 	}
 
 	private void addYourTobBookToGridPane(List<Integer> star4And5ID) throws IOException {
@@ -421,7 +426,7 @@ public class mainController implements Initializable {
 	}
 
 	public void updateMainFrame() {
-		DatabaseConnection databaseCon=new DatabaseConnection();
+		DatabaseConnection databaseCon=new DatabaseConnection(nC);
 		int result=databaseCon.getNumberOfBook(tempUsernameAccount);
 		if (!(result==0)){
 			countBook.setText(STR."Last add is: \{result}");
@@ -431,7 +436,27 @@ public class mainController implements Initializable {
 		}
 	}
 	private void updateReviewedBooks() {
-		DatabaseConnection databaseCon=new DatabaseConnection();
+		DatabaseConnection databaseCon=new DatabaseConnection(nC);
 		reviewedBooks.setText(STR."Reviewed books: \{databaseCon.getNumberOfReviewedBooks(tempUsernameAccount)}");
+	}
+
+    private void updateResentlyUploadedBook() throws IOException {
+        DatabaseConnection databaseConnection=new DatabaseConnection(nC);
+		databaseConnection.getInformationsOfBook(tempUsernameAccount);
+		for (bookInformations listOfObject:DatabaseConnection.listOfBook){
+			if (listOfObject.getTmep_reward()==null){
+				addBookForm(listOfObject);
+			}
+		}
+    }
+
+	private void addBookForm(bookInformations listOfObject) throws IOException {
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(getClass().getResource("/fxmlFile/bookAddedScene.fxml"));
+		new bookController(listOfObject,tempStage,nC);
+		HBox hBoxParent = loader.load();
+		hBoxParent.setId(STR."Vbox\{listOfObject.getID()}");
+		hBoxScrollPane.getChildren().clear();
+		hBoxScrollPane.getChildren().add(hBoxParent);
 	}
 }

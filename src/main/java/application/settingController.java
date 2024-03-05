@@ -1,6 +1,7 @@
 package application;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,11 +14,13 @@ import javafx.stage.Stage;
 public class settingController {
 
 	private static Stage tempStage;
-	
-	public void setStage(Stage tempStage) {
+	private static notificationsClass nC;
+
+	public settingController(Stage tempStage,notificationsClass nC){
 		settingController.tempStage=tempStage;
+		settingController.nC=nC;
 	}
-	
+	public settingController(){}
     @FXML
     void backToMainController(ActionEvent event) {
     	tempStage.close();
@@ -31,13 +34,13 @@ public class settingController {
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		Stage stage = new Stage();
-		scene.getStylesheets().add(getClass().getResource("/fxmlFile/application.css").toExternalForm());
+		scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/fxmlFile/application.css")).toExternalForm());
 		stage.setScene(scene);
 		stage.setTitle("Change Email");
-		Image image =new Image(getClass().getResource("/image/gmail.png").toString());
-		changeEmailController cPC=new changeEmailController();
+		Image image =new Image(Objects.requireNonNull(getClass().getResource("/image/gmail.png")).toString());
+		notificationsClass nCController=new notificationsClass();
+		new changeEmailController(stage,nCController,loader.getController());
 		tempStage.close();
-		cPC.setStage(stage);
 		stage.getIcons().add(image);
 		stage.show();
 		stage.setOnCloseRequest(event1 -> {
@@ -45,6 +48,7 @@ public class settingController {
 			Main main = new Main();
 			main.logout(stage);
 		});
+		nC.showNotificationEnterEmail();
     }
 
     @FXML
@@ -53,15 +57,14 @@ public class settingController {
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		Stage stage = new Stage();
-		scene.getStylesheets().add(getClass().getResource("/fxmlFile/application.css").toExternalForm());
+		scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/fxmlFile/application.css")).toExternalForm());
 		stage.setScene(scene);
 		stage.setTitle("Change Password");
-		Image image =new Image(getClass().getResource("/image/reset-password.png").toString());
-		changePasswordController cPC=new changePasswordController();
-		tempStage.close();
+		Image image =new Image(Objects.requireNonNull(getClass().getResource("/image/reset-password.png")).toString());
 		mainController mC=new mainController();
-		cPC.setTempWayToChange(mC.getTempUsername());
-		cPC.setStage(stage);
+		notificationsClass nCController =new notificationsClass();
+		new changePasswordController(mC.getTempUsername(),stage,nCController);
+		tempStage.close();
 		stage.getIcons().add(image);
 		stage.show();
 		stage.setOnCloseRequest(event1 -> {
@@ -69,29 +72,36 @@ public class settingController {
 			Main main = new Main();
 			main.logout(stage);
 		});
+		nC.showNotificationsEnterNewPassword();
     }
 
     @FXML
-    void changeUsername(ActionEvent event) throws IOException {
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFile/changeUsername.fxml"));
-		Parent root = loader.load();
-		Scene scene = new Scene(root);
-		Stage stage = new Stage();
-		scene.getStylesheets().add(getClass().getResource("/fxmlFile/application.css").toExternalForm());
-		stage.setScene(scene);
-		stage.setResizable(false);
-		stage.setTitle("Change Username");
-		changeUsernameController cUC=new changeUsernameController();
-		tempStage.hide();
-		cUC.setStage(stage);
-		Image image =new Image(getClass().getResource("/image/username.png").toString());
-		stage.getIcons().add(image);
-		stage.show();
-		stage.setOnCloseRequest(event1 -> {
-			event1.consume();
-			Main m = new Main();
-			m.logout(stage);
-		});
+    void changeUsername(ActionEvent event){
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFile/changeUsername.fxml"));
+			Parent root = loader.load();
+			Scene scene = new Scene(root);
+			Stage stage = new Stage();
+			scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/fxmlFile/application.css")).toExternalForm());
+			stage.setScene(scene);
+			stage.setResizable(false);
+			stage.setTitle("Change Username");
+			notificationsClass nCContoller = new notificationsClass();
+			nC.showNotificationsEnternewUsername();
+			new changeUsernameController(stage, nCContoller);
+			tempStage.hide();
+			Image image = new Image(Objects.requireNonNull(getClass().getResource("/image/username.png")).toString());
+			stage.getIcons().add(image);
+			stage.show();
+			stage.setOnCloseRequest(event1 -> {
+				event1.consume();
+				Main m = new Main();
+				m.logout(stage);
+			});
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+
     }
 	public void showStage() {
 		tempStage.show();

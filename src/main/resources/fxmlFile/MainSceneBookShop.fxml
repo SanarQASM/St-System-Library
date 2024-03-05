@@ -522,7 +522,7 @@
                                  <children>
                                     <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="226.0" text="Recently Added" textAlignment="CENTER" textFill="#18f08a">
                                        <font>
-                                          <Font name="Rockwell" size="24.0" />
+                                          <Font name="Rockwell" size="23.0" />
                                        </font>
                                        <padding>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -539,12 +539,12 @@
                                           <Pane layoutX="219.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
                                        </children>
                                     </HBox>
-                                    <ScrollPane fx:id="srcollPane" prefHeight="233.0" prefWidth="753.0" style="-fx-border-width: 3;">
+                                    <ScrollPane fx:id="srcollPane" prefHeight="250.0" prefWidth="753.0" style="-fx-border-width: 3;">
                                        <VBox.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </VBox.margin>
                                        <content>
-                                          <HBox fx:id="hBoxScrollPane" alignment="CENTER" prefHeight="223.0" prefWidth="765.0" spacing="5.0">
+                                          <HBox fx:id="hBoxScrollPane" alignment="CENTER" prefHeight="250.0" prefWidth="765.0" spacing="5.0">
                                              <padding>
                                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                              </padding>
@@ -557,7 +557,7 @@
                                              <children>
                                                 <Label fx:id="reviewedBooks" alignment="CENTER" contentDisplay="CENTER" layoutX="2.0" layoutY="3.0" prefHeight="39.0" prefWidth="291.0" text="Reviewed books" textAlignment="CENTER" textFill="#18f08a">
                                                    <font>
-                                                      <Font name="Rockwell" size="24.0" />
+                                                      <Font name="Rockwell" size="23.0" />
                                                    </font>
                                                    <padding>
                                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

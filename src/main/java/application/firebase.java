@@ -2,6 +2,7 @@ package application;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.*;
+import javafx.application.Platform;
 
 import java.io.*;
 import java.util.concurrent.TimeUnit;
@@ -23,20 +24,26 @@ public class firebase {
         }
         catch (Exception e){
             notificationsClass nC=new notificationsClass();
-            nC.showNotificaitonSomethingWrong();
+            nC.showNotificaitonSomethingWrong("failed to Connect To Firebase");
         }
     }
 
-    public String uploadFileUrl(String filePath, String remoteFilePath) {
+    public String uploadFileUrl(String filePath, String remoteFilePath){
         try (
                 InputStream content = Files.newInputStream(new File(filePath).toPath())) {
             storage.get(bucketName).create(remoteFilePath, content);
             Blob blob = storage.get(bucketName, remoteFilePath);
             return storage.signUrl(BlobInfo.newBuilder(blob.getBlobId()).build(), 1, TimeUnit.HOURS).toString();
-        } catch (Exception e) {
-            notificationsClass nC=new notificationsClass();
-            nC.showNotificaitonSomethingWrong();
-            return null;
+        }catch (Exception e) {
+            Platform.runLater(() -> {
+                notificationsClass nC = new notificationsClass();
+                if (e instanceof StorageException) {
+                    nC.showNotificaitonNointernet();
+                } else {
+                    nC.showNotificaitonSomethingWrong("failed to uploaded to firebase");
+                }
+            });
+            return "0";
         }
     }
     public String uploadImageUrl(String imagePath,String remoteImagePath){
@@ -45,36 +52,56 @@ public class firebase {
             storage.get(bucketName).create(remoteImagePath, content);
             Blob blob = storage.get(bucketName, remoteImagePath);
             return storage.signUrl(BlobInfo.newBuilder(blob.getBlobId()).build(), 1, TimeUnit.HOURS).toString();
-        } catch (Exception e) {
-            notificationsClass nC=new notificationsClass();
-            nC.showNotificaitonSomethingWrong();
-            return null;
+        }
+        catch (Exception e) {
+            Platform.runLater(() -> {
+                notificationsClass nC = new notificationsClass();
+                if (e instanceof StorageException) {
+                    nC.showNotificaitonNointernet();
+                } else {
+                    nC.showNotificaitonSomethingWrong("failed to uploaded to firebase");
+                }
+            });
+            return "0";
         }
     }
-    public void downloadFile(String url, String destinationPath) {
+    //        try {
+    //            URL fileUrl = new URL(url);
+//            HttpURLConnection httpURLConnection = (HttpURLConnection) fileUrl.openConnection();
+//            httpURLConnection.setRequestMethod("GET");
+//            httpURLConnection.setConnectTimeout(5000);
+//            int responseCode = httpURLConnection.getResponseCode();
+//            if (responseCode == HttpURLConnection.HTTP_OK) {
+//                InputStream inputStream = httpURLConnection.getInputStream();
+//                FileOutputStream outputStream = new FileOutputStream(destinationPath);
+//                byte[] buffer = new byte[4096];
+//                int bytesRead;
+//                while ((bytesRead = inputStream.read(buffer)) != -1) {
+//                    outputStream.write(buffer, 0, bytesRead);
+//                }
+//                inputStream.close();
+//                outputStream.close();
+//            }
+    public InputStream downloadFile(String urlGet, String destinationPath) {
+        InputStream inputStream = null;
         try {
-            URL fileUrl = new URL(url);
-            HttpURLConnection httpURLConnection = (HttpURLConnection) fileUrl.openConnection();
-            httpURLConnection.setRequestMethod("GET");
-            httpURLConnection.setConnectTimeout(5000);
-            int responseCode = httpURLConnection.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                InputStream inputStream = httpURLConnection.getInputStream();
-                FileOutputStream outputStream = new FileOutputStream(destinationPath);
-                byte[] buffer = new byte[4096];
-                int bytesRead;
-                while ((bytesRead = inputStream.read(buffer)) != -1) {
-                    outputStream.write(buffer, 0, bytesRead);
-                }
-                inputStream.close();
-                outputStream.close();
+            URL url = new URL(urlGet);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setConnectTimeout(5000);
+            connection.connect();
+            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                 inputStream = connection.getInputStream();
+            }else {
+                System.out.println("Failed to load image. HTTP error code: " + connection.getResponseCode());
             }
-
-            httpURLConnection.disconnect();
-        } catch (Exception e) {
-            notificationsClass nC=new notificationsClass();
-            nC.showNotificaitonSomethingWrong();
         }
+        catch (Exception e) {
+            e.printStackTrace();
+            notificationsClass nC=new notificationsClass();
+            nC.showNotificaitonSomethingWrong("failed to download file from Firebase");
+        }
+        return inputStream;
     }
     public void deleteFile(String objectPath) {
         try {
@@ -85,11 +112,11 @@ public class firebase {
                 blob.delete();
             } else {
                 notificationsClass nC=new notificationsClass();
-                nC.showNotificaitonSomethingWrong();
+                nC.showNotificaitonSomethingWrong("failed to delete File Or Image");
             }
         } catch (Exception e) {
                 notificationsClass nC=new notificationsClass();
-                nC.showNotificaitonSomethingWrong();
+                nC.showNotificaitonSomethingWrong("failed to delete File Or Image");
         }
     }
 
